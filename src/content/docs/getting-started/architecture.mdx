@@ -1,14 +1,14 @@
 ---
-title: Architecture
-description: Overview of the Stasis AI technical stack.
+title: MAFIS Architecture
+description: Overview of the MAFIS (Multi-Agent Fault Injection Simulator) technical stack.
 ---
 
-Stasis AI relies on a modern, deeply optimized technical stack bridging the gap between high-performance systems programming and accessible web interfaces.
+MAFIS entirely relies on a modern, deeply optimized systems programming stack tailored to large-scale simulations.
 
 ## 1. Rust & Bevy Engine (The Core)
 
 The core logic, pathfinding algorithms, and spatial interactions are written in **Rust**.
-Rather than an object-oriented approach, we use **Bevy Engine’s Entity Component System (ECS)**. This provides cache locality and parallel execution paths. By breaking our agents into fine-grained components, we guarantee that computing 1,000+ agent paths per tick remains entirely bound to minimal latency limits.
+Rather than an object-oriented approach, we use **Bevy Engine’s Entity Component System (ECS)**. This provides phenomenal cache locality and parallel execution paths. By breaking our agents into fine-grained components, computing agent paths per tick remains entirely bound to minimal latency constraints.
 
 Here is a glimpse of our fundamental agent component structure in the engine:
 
@@ -24,16 +24,12 @@ pub struct LogicalAgent {
 }
 ```
 
-## 2. WebAssembly (Wasm) Compilation
+## 2. Solver Architectures
 
-We extract the Bevy application state and compile the logic directly to **WebAssembly (Wasm)**. 
-Wasm operates near native speed inside modern web browsers, eliminating the need for a separate backend server for computing movements. There are **zero garbage collection pauses**, ensuring deterministic framing.
+Instead of keeping solving tightly coupled to our rendering layer, MAFIS logically separates pathfinding via robust abstractions.
+Solvers—such as conflict-based search (CBS) or PIBT—run cleanly. This separation allows us to safely and continuously query solver paths while handling real-time runtime events like faults and hardware simulation failures.
 
-## 3. React Three Fiber (The View)
+## 3. Fault Injection and State Mutations
 
-The frontend visualizes the WebAssembly output using **React Three Fiber (R3F)** and **Three.js**.
-We utilize `InstancedMesh` and optimized GLSL shaders to render robotic frames. When the React app receives a buffer of positions from the Wasm module, it updates instances via buffer attributes—a massive performance gain over mapping DOM nodes.
-
-## 4. Astro & TailwindCSS (The Shell)
-
-The website structure, routing, and this documentation is powered by **Astro**, ensuring an incredibly fast, static initial payload. All styling relies heavily on **Tailwind CSS**.
+In a traditional MAPF solver, everything is static. In MAFIS, the engine acts as an adversary.
+Using Bevy's robust event systems, custom fault injection logic can broadcast sudden failures to agents mid-simulation. This invalidates planned paths dynamically, forcing real-time recalculations and highlighting cascading system latencies.

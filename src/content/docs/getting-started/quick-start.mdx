@@ -1,50 +1,43 @@
 ---
 title: Quick Start
-description: Running the Stasis AI project locally.
+description: Running the MAFIS simulator locally.
 ---
 
-Follow these steps to build and run the Stasis AI website and simulator locally.
+Follow these steps to build and run the MAFIS simulator locally on your machine.
 
 ## Prerequisites
 
 Ensure you have the following installed on your system:
-- **Node.js** (v18 or higher)
 - **Rust & Cargo** (Latest stable toolchain)
-- **wasm-pack** (For compiling Rust into WebAssembly)
+- Any native dependencies required by **Bevy** (e.g., Alsa, udev, Wayland on Linux; typically bundled on Windows/macOS).
 
-## 1. Clone the Repository
+## 1. Clone the Simulator Repository
 
-Clone the project from GitHub and navigate into the directory:
-
-```bash
-git clone https://github.com/stasisai/stasisai-website.git
-cd stasisai-website
-```
-
-## 2. Compile the WebAssembly Module
-
-Before running the website, the Rust engine must be compiled into a Wasm package.
-Navigate to the rust crate directory (if separated) and run:
+Clone the project from GitHub and navigate into the root directory:
 
 ```bash
-wasm-pack build --target web
+git clone https://github.com/stasisai/mafis.git
+cd mafis
 ```
-*(Make sure the generated `pkg` folder is accessible by the web frontend).*
 
-## 3. Install NPM Dependencies
+*(Note: Replace with your exact repository URL if different).*
 
-Return to the root of the web project and install dependencies:
+## 2. Compile and Run the Engine
+
+Because MAFIS is built natively in Rust and uses Bevy Engine, you do not need node modules or WebAssembly compilers. Simply use standard cargo commands.
+
+To test the default simulation scene:
 
 ```bash
-npm install
+cargo run --release
 ```
 
-## 4. Start the Dev Server
+Using `--release` is highly recommended for any performance measurements or high-density agent counts, as the Rust compiler optimizations dramatically reduce pathfinding calculation times.
 
-Launch the Astro development server:
+## 3. Passing Configuration Parameters
+
+You can pass arguments to control map loading, algorithms, or fault injection. Check the help command out of the box:
 
 ```bash
-npm run dev
+cargo run --release -- --help
 ```
-
-Visit `http://localhost:4322` to see the landing page and navigate to the `/simulator` to test the engine.

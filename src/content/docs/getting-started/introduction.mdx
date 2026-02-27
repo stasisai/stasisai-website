@@ -1,9 +1,9 @@
 ---
-title: Introduction to Stasis AI
-description: What is Stasis AI and why does it exist?
+title: Introduction to MAFIS
+description: What is MAFIS and why does it exist?
 ---
 
-**Stasis AI** is a state-of-the-art simulator designed to run Multi-Agent Path Finding (MAPF) algorithms with built-in, real-time **Fault Injection**.
+**MAFIS (Multi-Agent Fault Injection Simulator)** is a state-of-the-art simulator designed to run Multi-Agent Path Finding (MAPF) algorithms with built-in, real-time **Fault Injection**.
 
 ## The Problem
 
@@ -13,10 +13,10 @@ However, in the real world, hardware fails. When a robot suffers a sudden power 
 
 ## The Solution
 
-Stasis AI exists to model exactly this scenario. By writing our engine in Rust—leveraging the **Bevy Engine** ECS framework—and compiling it strictly to WebAssembly, we permit researchers and engineers to:
+MAFIS exists to model exactly this scenario. By writing our engine structurally in Rust—leveraging the powerful **Bevy Engine** ECS framework—we permit researchers and engineers to:
 
-1. **Visualize Large-scale Swarms:** View the simulation natively in the browser without lag.
-2. **Inject Faults:** Programmatically kill agents to study system resilience.
+1. **Simulate Large-scale Swarms:** View the simulation natively leveraging compiled Rust performance without bottlenecking.
+2. **Inject Faults:** Programmatically kill agents or inject deterministic faults to study system resilience.
 3. **Analyze Recovery:** Understand bottleneck propagation in real time.
 
 Proceed to the [Architecture Overview](/getting-started/architecture/) to learn how the pieces fit together.

@@ -1,9 +1,9 @@
 ---
-title: Stasis AI Documentation
-description: Read the technical documentation for the Stasis AI MAPF Fault Injection Simulator.
+title: MAFIS Documentation
+description: Read the technical documentation for the MAFIS (Multi-Agent Fault Injection Simulator).
 template: splash
 hero:
-  tagline: Explore the inner workings of our Blazing Fast MAPF Fault Injection Simulator. Built in Rust and compiled to WebAssembly.
+  tagline: Explore the inner workings of our Blazing Fast MAPF Fault Injection Simulator. Built natively in Rust with the Bevy Engine.
   image:
     file: ../../../public/stasis-research.svg
   actions:
@@ -11,7 +11,7 @@ hero:
       link: /getting-started/introduction/
       icon: right-arrow
     - text: View on GitHub
-      link: https://github.com/stasisai/stasisai-website
+      link: https://github.com/stasisai
       icon: external
       variant: minimal
 ---
@@ -22,15 +22,15 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid stagger>
 	<Card title="Zero-Cost Abstractions" icon="rocket">
-		Dive into our Rust-based backend powered by **Bevy Engine**. Learn how we achieve 60FPS fluid rendering and 0ms latency overhead.
+		Dive into our Rust-based backend powered by **Bevy Engine**. Learn how we achieve unparalleled fluid simulation performance and minimal latency overhead.
 	</Card>
 	<Card title="Research-Grade Solvers" icon="puzzle">
-		Understand our state-of-the-art implementations of Conflict-Based Search (CBS), PIBT, and LaCAM.
+		Understand our state-of-the-art implementations of Conflict-Based Search (CBS), PIBT, and A*.
 	</Card>
 	<Card title="Fault Contagion" icon="warning">
 		Learn how to define simulation configurations, trigger precise crash events, and observe realistic cascading delays.
 	</Card>
-	<Card title="API Reference" icon="document">
-		Consult absolute references for WebAssembly bindings, React front-end hooks, and configuration schemas.
+	<Card title="Simulation Usage" icon="document">
+		Consult absolute references for CLI commands, scenario configurations, and Bevy application logic.
 	</Card>
 </CardGrid>
