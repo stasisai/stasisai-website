@@ -78,36 +78,54 @@ import KineticGrid from '../components/KineticGrid.jsx';
           <em>Compiled to WebAssembly.</em>
         </h2>
 
-        <!-- Pillar 1: Blazing Fast -->
-        <div class="pillar-row">
-          <img src="/stasis-blazing-fast.svg" alt="Blazing Fast" class="pillar-icon" />
-          <div class="pillar-content">
-            <h3 class="pillar-title" style="color:#E8862A;">Blazing Fast</h3>
-            <p class="pillar-text">
-              Powered by <a href="https://bevyengine.org/" target="_blank" class="bevy-link"><strong>Bevy Engine</strong></a> and Rust's zero-cost abstractions. No garbage collector pauses. No runtime overhead. No compromises.
-            </p>
+        <!-- Pillar Group for Hover Fading -->
+        <div class="pillar-group">
+          <!-- Pillar 1: Blazing Fast -->
+          <div class="pillar-row">
+            <div class="pillar-icon-box">
+              <span class="pillar-mod">MOD.01</span>
+              <img src="/stasis-blazing-fast.svg" alt="Blazing Fast" class="pillar-icon" />
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title" style="color:#E8862A;">
+                <span class="pillar-line" style="background:#E8862A;"></span>Blazing Fast
+              </h3>
+              <p class="pillar-text">
+                Powered by <a href="https://bevyengine.org/" target="_blank" class="bevy-link"><strong>Bevy Engine</strong></a> and Rust's zero-cost abstractions. No garbage collector pauses. No runtime overhead. No compromises.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- Pillar 2: Research-Grade -->
-        <div class="pillar-row">
-          <img src="/stasis-research.svg" alt="Research Grade" class="pillar-icon" />
-          <div class="pillar-content">
-            <h3 class="pillar-title" style="color:#3DB8E8;">Research-Grade</h3>
-            <p class="pillar-text">
-              Built on state-of-the-art MAPF solvers — <strong>CBS, LaCAM, PIBT</strong>. Every algorithm implemented from peer-reviewed publications and validated against published benchmarks.
-            </p>
+          <!-- Pillar 2: Research-Grade -->
+          <div class="pillar-row">
+            <div class="pillar-icon-box">
+              <span class="pillar-mod">MOD.02</span>
+              <img src="/stasis-research.svg" alt="Research Grade" class="pillar-icon" />
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title" style="color:#3DB8E8;">
+                <span class="pillar-line" style="background:#3DB8E8;"></span>Research-Grade
+              </h3>
+              <p class="pillar-text">
+                Built on state-of-the-art MAPF solvers — <strong>CBS, LaCAM, PIBT</strong>. Every algorithm implemented from peer-reviewed publications and validated against published benchmarks.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- Pillar 3: Fault Injection -->
-        <div class="pillar-row" style="border-bottom: 1px solid rgba(240,237,233,0.1);">
-          <img src="/stasis-fault.svg" alt="Fault Injection" class="pillar-icon" />
-          <div class="pillar-content">
-            <h3 class="pillar-title" style="color:#34D399;">Fault Injection</h3>
-            <p class="pillar-text">
-              Inject crash faults at any scale. Observe <strong>cascading failures</strong> propagate in real time across hundreds of concurrent agents. Measure recovery latency with precision.
-            </p>
+          <!-- Pillar 3: Fault Injection -->
+          <div class="pillar-row">
+            <div class="pillar-icon-box">
+              <span class="pillar-mod">MOD.03</span>
+              <img src="/stasis-fault.svg" alt="Fault Injection" class="pillar-icon" />
+            </div>
+            <div class="pillar-content">
+              <h3 class="pillar-title" style="color:#34D399;">
+                <span class="pillar-line" style="background:#34D399;"></span>Fault Injection
+              </h3>
+              <p class="pillar-text">
+                Inject crash faults at any scale. Observe <strong>cascading failures</strong> propagate in real time across hundreds of concurrent agents. Measure recovery latency with precision.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -115,14 +133,17 @@ import KineticGrid from '../components/KineticGrid.jsx';
           <div class="stat">
             <span class="stat-value stat-red">[256]</span>
             <span class="stat-label">Concurrent Agents</span>
+            <div class="stat-bar"><div class="stat-fill" style="width: 80%; background: var(--red);"></div></div>
           </div>
           <div class="stat">
             <span class="stat-value stat-green">[60 FPS]</span>
             <span class="stat-label">Fluid Rendering</span>
+            <div class="stat-bar"><div class="stat-fill" style="width: 100%; background: var(--green);"></div></div>
           </div>
           <div class="stat">
             <span class="stat-value">[0ms]</span>
             <span class="stat-label">Latency Overhead</span>
+            <div class="stat-bar"><div class="stat-fill" style="width: 15%; background: rgba(240,237,233,0.5);"></div></div>
           </div>
         </div>
       </div>
@@ -133,20 +154,44 @@ import KineticGrid from '../components/KineticGrid.jsx';
       <div class="section-inner">
         <h3 class="features-title">Deep <em>Inspection</em></h3>
         <div class="cards-grid">
-          <div class="card">
-            <div class="card-tag">Feature . 01</div>
+          <!-- CARD 1 -->
+          <div class="card card-hover-red">
+            <div class="card-bg-number">01</div>
+            <div class="card-header">
+              <div class="card-tag">Inspection . 01</div>
+              <div class="micro-viz-timeline">
+                <div class="m-dot m-dot-green"></div><div class="m-line"></div>
+                <div class="m-dot m-dot-red pulse"></div><div class="m-line m-line-broken"></div>
+              </div>
+            </div>
             <h4 class="card-title">Crash Faults</h4>
-            <p class="card-text">Simulate sudden hard failures. Observe instantaneous rerouting latency across dense networks and cascading delays.</p>
+            <p class="card-text">Simulate sudden hard failures. Observe instantaneous rerouting latency across dense networks and cascading delays as the swarm recovers.</p>
           </div>
-          <div class="card">
-            <div class="card-tag">Feature . 02</div>
+          <!-- CARD 2 -->
+          <div class="card card-hover-orange">
+            <div class="card-bg-number">02</div>
+            <div class="card-header">
+              <div class="card-tag">Inspection . 02</div>
+              <div class="micro-viz-heatmap">
+                <div class="m-square m-c1"></div><div class="m-square m-c2"></div>
+                <div class="m-square m-c3"></div><div class="m-square m-c4"></div>
+              </div>
+            </div>
             <h4 class="card-title">Congestion Heatmaps</h4>
-            <p class="card-text">Visualize invisible bottlenecks cascading through paths. Track heat persistence and pressure distribution in real time.</p>
+            <p class="card-text">Visualize invisible bottlenecks cascading through paths. Track heat persistence and pressure distribution via spatial grids in real time.</p>
           </div>
-          <div class="card">
-            <div class="card-tag">Feature . 03</div>
-            <h4 class="card-title">SOTA Algorithms</h4>
-            <p class="card-text">Built on CBS, LaCAM, PIBT, and A* variants for accurate, state-of-the-art multi-agent routing and traffic modeling.</p>
+          <!-- CARD 3 -->
+          <div class="card card-hover-blue">
+            <div class="card-bg-number">03</div>
+            <div class="card-header">
+              <div class="card-tag">Inspection . 03</div>
+              <div class="micro-viz-matrix">
+                <span>1</span><span>0</span><span>0</span><span>1</span>
+                <span>0</span><span style="color:#3DB8E8">1</span><span>0</span><span>0</span>
+              </div>
+            </div>
+            <h4 class="card-title">Deterministic Replay</h4>
+            <p class="card-text">Record and replay chaotic cascade events step-by-step. Perfect determinism ensures rare crash anomalies can be isolated and studied offline.</p>
           </div>
         </div>
       </div>
@@ -393,28 +438,48 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .dark-title em { color: rgba(240,237,233,0.35); }
 
+    .pillar-group:hover .pillar-row { opacity: 0.3; }
+    .pillar-group .pillar-row:hover { opacity: 1; transform: translateX(8px); }
+    
     .pillar-row {
-      display: flex; align-items: center; gap: 28px;
+      display: flex; align-items: flex-start; gap: 32px;
       padding: 32px 0;
       border-top: 1px solid rgba(240,237,233,0.1);
       flex-wrap: wrap;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .pillar-group .pillar-row:last-child {
+      border-bottom: 1px solid rgba(240,237,233,0.1);
+    }
+
+    .pillar-icon-box { 
+      position: relative; flex-shrink: 0;
+    }
+    .pillar-mod {
+      position: absolute; top: -14px; left: 0;
+      font-family: var(--mono); font-size: 8px; color: rgba(240,237,233,0.3);
+      letter-spacing: 0.1em;
     }
     .pillar-icon { 
       height: 64px; width: 64px; border-radius: 16px; 
       background: var(--surface); padding: 12px;
-      object-fit: cover; flex-shrink: 0; 
+      object-fit: cover;
     }
-    .pillar-content { flex: 1; min-width: 240px; }
+    .pillar-content { flex: 1; min-width: 240px; padding-top: 4px; }
     .pillar-title {
       font-family: var(--mono); font-size: 13px;
       text-transform: uppercase; letter-spacing: 0.12em;
       margin-bottom: 8px; font-weight: 500;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .pillar-line {
+      display: inline-block; width: 24px; height: 1px;
+      background: currentColor; opacity: 0.5;
     }
     .pillar-text {
       font-family: var(--sans); font-weight: 300; font-size: 0.95rem;
       color: rgba(240,237,233,0.55); max-width: 480px; line-height: 1.7;
     }
-    .pillar-text strong { color: var(--text-dark); font-weight: 500; }
     
     .bevy-link {
       color: inherit;
@@ -427,7 +492,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
 
     .stats-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
-      margin-top: 32px;
+      margin-top: 64px;
     }
     .stat { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
     .stat-value {
@@ -436,9 +501,11 @@ import KineticGrid from '../components/KineticGrid.jsx';
       margin-bottom: 6px; font-weight: 400; letter-spacing: normal;
       color: var(--text-dark);
     }
+    .stat-label { color: rgba(240,237,233,0.45); display: inline-block; margin-bottom: 12px; }
     .stat-red { color: var(--red); }
     .stat-green { color: var(--green); }
-    .stat-label { color: rgba(240,237,233,0.45); }
+    .stat-bar { width: 100%; max-width: 140px; height: 2px; background: rgba(240,237,233,0.1); border-radius: 1px; overflow: hidden; }
+    .stat-fill { height: 100%; border-radius: 1px; }
 
     /* ─── Features Section ─────────────────────────────────── */
     .features-section {
@@ -457,20 +524,57 @@ import KineticGrid from '../components/KineticGrid.jsx';
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
     }
     .card {
+      position: relative; overflow: hidden;
       background: var(--surface); border: 1px solid rgba(0,0,0,0.08);
       border-radius: 12px; padding: 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: default;
     }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.04); }
+    
+    .card-hover-red:hover { border-top: 2px solid var(--red); }
+    .card-hover-orange:hover { border-top: 2px solid #E8862A; }
+    .card-hover-blue:hover { border-top: 2px solid #3DB8E8; }
+
+    .card-bg-number {
+      position: absolute; right: -10px; bottom: -20px;
+      font-family: var(--serif); font-size: 8rem; font-style: italic;
+      color: var(--dark); opacity: 0.03; line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
     .card-tag {
       font-family: var(--mono); font-size: 10px;
       text-transform: uppercase; letter-spacing: 0.15em;
-      color: var(--text-sec); margin-bottom: 24px;
+      color: var(--text-sec);
     }
     .card-title {
-      font-family: var(--serif); font-size: 1.5rem; margin-bottom: 12px;
+      font-family: var(--serif); font-size: 1.5rem; margin-bottom: 12px; position: relative; z-index: 2;
     }
     .card-text {
       font-family: var(--sans); font-weight: 300;
-      color: var(--text-sec); line-height: 1.7; font-size: 0.9rem;
+      color: var(--text-sec); line-height: 1.7; font-size: 0.9rem; position: relative; z-index: 2;
+    }
+
+    /* Micro Visualizations */
+    .micro-viz-timeline { display: flex; align-items: center; gap: 4px; }
+    .m-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .m-dot-green { background: var(--green); }
+    .m-dot-red { background: var(--red); }
+    .m-line { width: 12px; height: 1px; background: rgba(0,0,0,0.2); }
+    .m-line-broken { background: repeating-linear-gradient(90deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2) 2px, transparent 2px, transparent 4px); }
+    @keyframes pulseViz { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } 100% { opacity: 1; transform: scale(1); } }
+    .pulse { animation: pulseViz 1.5s infinite; }
+
+    .micro-viz-heatmap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+    .m-square { width: 8px; height: 8px; border-radius: 2px; }
+    .m-c1 { background: #E8862A; opacity: 0.4; } .m-c2 { background: var(--red); opacity: 0.7; }
+    .m-c3 { background: var(--green); opacity: 0.5; } .m-c4 { background: #E8862A; opacity: 0.9; }
+
+    .micro-viz-matrix { 
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px 4px;
+      font-family: var(--mono); font-size: 8px; color: rgba(0,0,0,0.3); line-height: 1;
     }
 
     /* ─── Footer ───────────────────────────────────────────── */
@@ -548,22 +652,35 @@ import KineticGrid from '../components/KineticGrid.jsx';
       .hero-content { padding: 0 20px; height: 100vh; display: flex; flex-direction: column; justify-content: center; }
       .hero-title { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.05; }
       
-      /* Make sections compact to fit in viewport viewport */
-      .dark-section, .features-section { min-height: 100vh; display: flex; align-items: center; padding: 0; }
+      /* Make dark section single viewport */
+      .dark-section { min-height: 100vh; display: flex; align-items: center; padding: 0; }
+      
+      /* Features section allowed to scroll to respect rich content height */
+      .features-section { min-height: auto; padding: 64px 0; display: block; }
       .section-inner { padding: 32px 20px; width: 100%; }
       .dark-title { font-size: 2.2rem; margin-bottom: 24px; }
       .features-title { font-size: 2.2rem; margin-bottom: 32px; }
       
-      .pillar-row { padding: 16px 0; flex-wrap: nowrap; gap: 16px; }
+      .pillar-row { padding: 16px 0; flex-wrap: nowrap; gap: 16px; align-items: flex-start; }
+      .pillar-icon-box { margin-top: 4px; }
+      .pillar-mod { display: none; }
       .pillar-title { font-size: 11px; margin-bottom: 4px; }
+      .pillar-line { width: 12px; }
       .pillar-text { font-size: 0.85rem; line-height: 1.5; }
+      
+      .pillar-group:hover .pillar-row { opacity: 1; transform: none; }
+      .pillar-group .pillar-row:hover { transform: none; }
+      
       .stats-grid { margin-top: 32px; gap: 16px; }
       .stat-value { font-size: 1.4rem; }
-      .stat-label { font-size: 9px; }
+      .stat-label { font-size: 9px; margin-bottom: 6px; }
+      .stat-bar { max-width: 100px; }
       
+      .cards-grid { gap: 16px; }
       .card { padding: 24px; }
       .card-title { font-size: 1.3rem; margin-bottom: 8px; }
       .card-text { font-size: 0.85rem; line-height: 1.5; }
+      .card-bg-number { font-size: 5rem; right: -5px; bottom: -10px; }
       
       .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
     }
