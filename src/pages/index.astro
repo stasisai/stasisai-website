@@ -197,6 +197,34 @@ import KineticGrid from '../components/KineticGrid.jsx';
       </div>
     </section>
 
+    <!-- ══════════ ECOSYSTEM & COMMUNITY ══════════ -->
+    <section class="community-section">
+      <div class="section-inner">
+        <h3 class="community-title">The MAPF <em>Ecosystem</em></h3>
+        <p class="community-intro">
+          MAFIS (Multi-Agent Fault Injection Simulator) focuses entirely on the intersection of pathfinding and chaos engineering. We believe in modular logic and collaboration over duplication.
+        </p>
+        
+        <div class="ecosystem-grid">
+          <div class="eco-card">
+            <h4 class="eco-title">Algorithm Benchmarking</h4>
+            <p class="eco-text">
+              We do not track algorithm baseline performances. For state-of-the-art algorithmic comparisons and the definitive leaderboard of solvers, we proudly refer researchers to the community-maintained <strong>MAPF Tracker</strong>.
+            </p>
+            <a href="http://mapf.info/" target="_blank" class="eco-link">Visit MAPF Tracker ↗</a>
+          </div>
+          
+          <div class="eco-card">
+            <h4 class="eco-title">Standard Instances</h4>
+            <p class="eco-text">
+              We do not host rigid instance sets. For standardized 2D grid test environments (cities, games, mazes) and standard scenarios, please consult the <strong>MovingAI MAPF Benchmarks</strong> suite.
+            </p>
+            <a href="https://movingai.com/benchmarks/mapf.html" target="_blank" class="eco-link">View MovingAI Benchmarks ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ══════════ FOOTER ══════════ -->
     <footer class="site-footer">
       <div class="footer-inner">
@@ -577,6 +605,49 @@ import KineticGrid from '../components/KineticGrid.jsx';
       font-family: var(--mono); font-size: 8px; color: rgba(0,0,0,0.3); line-height: 1;
     }
 
+    /* ─── Community Section ────────────────────────────────── */
+    .community-section {
+      width: 100%; background: var(--bg); padding: 80px 0;
+      position: relative; z-index: 20; scroll-snap-align: start;
+      border-top: 1px dashed rgba(0,0,0,0.08);
+    }
+    .community-title {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.5rem);
+      margin-bottom: 24px; letter-spacing: -0.5px;
+    }
+    .community-title em { font-style: italic; color: rgba(10,10,10,0.4); }
+    .community-intro {
+      font-family: var(--sans); font-weight: 300; font-size: 1rem;
+      color: var(--text-sec); max-width: 640px; margin-bottom: 48px;
+      line-height: 1.6;
+    }
+    
+    .ecosystem-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
+    }
+    .eco-card {
+      background: transparent; border-left: 2px solid rgba(0,0,0,0.1);
+      padding: 0 0 0 24px;
+    }
+    .eco-title {
+      font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--text-dark); margin-bottom: 12px;
+    }
+    .eco-text {
+      font-family: var(--sans); font-weight: 300; font-size: 0.9rem;
+      color: var(--text-sec); margin-bottom: 24px; line-height: 1.6;
+    }
+    .eco-text strong {
+      font-weight: 500; color: var(--dark);
+    }
+    .eco-link {
+      display: inline-block; font-family: var(--mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--dark);
+      text-decoration: none; padding-bottom: 4px;
+      border-bottom: 1px solid rgba(0,0,0,0.1); transition: opacity 0.2s;
+    }
+    .eco-link:hover { opacity: 0.6; }
+
     /* ─── Footer ───────────────────────────────────────────── */
     .site-footer {
       width: 100%; background: var(--bg); padding: 40px 32px;
@@ -628,8 +699,9 @@ import KineticGrid from '../components/KineticGrid.jsx';
       .hero-gradient { width: 100%; background: rgba(245,242,238,0.85); }
       .hero-content { padding: 0 24px; }
       .cards-grid { grid-template-columns: 1fr; }
+      .ecosystem-grid { grid-template-columns: 1fr; gap: 40px; }
       .stats-grid { grid-template-columns: 1fr; gap: 24px; margin-top: 40px; }
-      .dark-section, .features-section { min-height: auto; padding: 64px 0; }
+      .dark-section, .features-section, .community-section { min-height: auto; padding: 64px 0; }
       .section-inner { padding: 48px 24px; }
       
       .pillar-row { flex-direction: row; align-items: flex-start; gap: 16px; padding: 24px 0; flex-wrap: nowrap; }
@@ -681,6 +753,10 @@ import KineticGrid from '../components/KineticGrid.jsx';
       .card-title { font-size: 1.3rem; margin-bottom: 8px; }
       .card-text { font-size: 0.85rem; line-height: 1.5; }
       .card-bg-number { font-size: 5rem; right: -5px; bottom: -10px; }
+      
+      .community-section { padding: 48px 0; border-top: none; }
+      .community-title { font-size: 1.8rem; margin-bottom: 20px; }
+      .community-intro { font-size: 0.9rem; margin-bottom: 32px; }
       
       .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
     }
