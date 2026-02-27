@@ -1,40 +1,36 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
+title: Stasis AI Documentation
+description: Read the technical documentation for the Stasis AI MAPF Fault Injection Simulator.
+template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Explore the inner workings of our Blazing Fast MAPF Fault Injection Simulator. Built in Rust and compiled to WebAssembly.
   image:
-    file: ../../assets/houston.webp
+    file: ../../../public/stasis-research.svg
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Getting Started
+      link: /getting-started/introduction/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: View on GitHub
+      link: https://github.com/stasisai/stasisai-website
       icon: external
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+## Discover the Engine
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Zero-Cost Abstractions" icon="rocket">
+		Dive into our Rust-based backend powered by **Bevy Engine**. Learn how we achieve 60FPS fluid rendering and 0ms latency overhead.
 	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
+	<Card title="Research-Grade Solvers" icon="puzzle">
+		Understand our state-of-the-art implementations of Conflict-Based Search (CBS), PIBT, and LaCAM.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Fault Contagion" icon="warning">
+		Learn how to define simulation configurations, trigger precise crash events, and observe realistic cascading delays.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="API Reference" icon="document">
+		Consult absolute references for WebAssembly bindings, React front-end hooks, and configuration schemas.
 	</Card>
 </CardGrid>

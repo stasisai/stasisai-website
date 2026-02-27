@@ -1,0 +1,50 @@
+---
+title: Quick Start
+description: Running the Stasis AI project locally.
+---
+
+Follow these steps to build and run the Stasis AI website and simulator locally.
+
+## Prerequisites
+
+Ensure you have the following installed on your system:
+- **Node.js** (v18 or higher)
+- **Rust & Cargo** (Latest stable toolchain)
+- **wasm-pack** (For compiling Rust into WebAssembly)
+
+## 1. Clone the Repository
+
+Clone the project from GitHub and navigate into the directory:
+
+```bash
+git clone https://github.com/stasisai/stasisai-website.git
+cd stasisai-website
+```
+
+## 2. Compile the WebAssembly Module
+
+Before running the website, the Rust engine must be compiled into a Wasm package.
+Navigate to the rust crate directory (if separated) and run:
+
+```bash
+wasm-pack build --target web
+```
+*(Make sure the generated `pkg` folder is accessible by the web frontend).*
+
+## 3. Install NPM Dependencies
+
+Return to the root of the web project and install dependencies:
+
+```bash
+npm install
+```
+
+## 4. Start the Dev Server
+
+Launch the Astro development server:
+
+```bash
+npm run dev
+```
+
+Visit `http://localhost:4322` to see the landing page and navigate to the `/simulator` to test the engine.

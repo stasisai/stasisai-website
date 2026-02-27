@@ -450,27 +450,29 @@ function Scene() {
     );
 }
 
-export default function KineticGrid() {
+export default function KineticGrid({ hideOverlay = false }) {
     return (
         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
             <Canvas camera={{ position: [0, 9, 11], fov: 38 }} style={{ background: 'transparent' }}>
                 <Scene />
             </Canvas>
-            <div style={{
-                position: 'absolute', bottom: '2.5rem', right: '2.5rem',
-                pointerEvents: 'none', opacity: 0.3, textAlign: 'right',
-            }}>
-                <p style={{
-                    fontFamily: '"DM Mono", monospace', fontSize: '10px',
-                    textTransform: 'uppercase', letterSpacing: '0.15em',
-                    color: '#0A0A0A', lineHeight: '2',
+            {!hideOverlay && (
+                <div style={{
+                    position: 'absolute', bottom: '2.5rem', right: '2.5rem',
+                    pointerEvents: 'none', opacity: 0.3, textAlign: 'right',
                 }}>
-                    Sys.Status: [ NOMINAL ]<br />
-                    Algorithm: [ PIBT ]<br />
-                    Agents: [ {NUM_AGENTS} ]<br />
-                    &gt; Click grid to inject fault
-                </p>
-            </div>
+                    <p style={{
+                        fontFamily: '"DM Mono", monospace', fontSize: '10px',
+                        textTransform: 'uppercase', letterSpacing: '0.15em',
+                        color: '#0A0A0A', lineHeight: '2',
+                    }}>
+                        Sys.Status: [ NOMINAL ]<br />
+                        Algorithm: [ PIBT ]<br />
+                        Agents: [ {NUM_AGENTS} ]<br />
+                        &gt; Click grid to inject fault
+                    </p>
+                </div>
+            )}
         </div>
     );
 }

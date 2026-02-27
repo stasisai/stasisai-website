@@ -1,0 +1,26 @@
+---
+title: Metrics & Profiling
+description: How to profile performance and export data from Stasis AI.
+---
+
+When executing chaos engineering on MAPF solvers, qualitative observation is good, but quantitative logic is required for publishable research. Stasis AI natively exposes a rich metrics pipeline.
+
+## Frontend Profiling
+The web interface ships with `r3f-perf`, a performance profiler that automatically measures:
+- **GPU Frame Time (ms)**
+- **CPU Script Time (ms)**
+- **Draw Calls**
+- **Polygons rendered**
+
+This enables scientists to ensure that any stutter in the simulation is a result of algorithmic congestion, not rendering latency.
+
+## Wasm Metrics API
+The compiled WebAssembly module continuously logs data arrays formatted for JSON serialization.
+
+At every tick, we expose:
+1. **Throughput**: Total number of agents that successfully advanced.
+2. **Pathfinding Latency**: Time (in microseconds) the Rust CPU took to solve the current step.
+3. **Makespan**: The number of timesteps elapsed since epoch.
+4. **Deadlocks**: The number of priority-inversion cycles active on the board.
+
+These arrays can be batched and downloaded directly from the web client for posterior analysis using Python Dataframes (Pandas/Matplotlib).

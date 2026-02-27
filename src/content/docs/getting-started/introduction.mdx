@@ -1,0 +1,22 @@
+---
+title: Introduction to Stasis AI
+description: What is Stasis AI and why does it exist?
+---
+
+**Stasis AI** is a state-of-the-art simulator designed to run Multi-Agent Path Finding (MAPF) algorithms with built-in, real-time **Fault Injection**.
+
+## The Problem
+
+In industrial automation, automated guided vehicles (AGVs) in warehouses or swarms of delivery drones rely on precise algorithmic coordination. Solvers like CBS or PIBT coordinate hundreds of agents simultaneously to ensure they do not collide. 
+
+However, in the real world, hardware fails. When a robot suffers a sudden power loss or sensor failure, it forms a dynamic obstacle. This crash forces surrounding robots to queue or recalculate their paths, often triggering a cascading latency wave throughout the entire system.
+
+## The Solution
+
+Stasis AI exists to model exactly this scenario. By writing our engine in Rust—leveraging the **Bevy Engine** ECS framework—and compiling it strictly to WebAssembly, we permit researchers and engineers to:
+
+1. **Visualize Large-scale Swarms:** View the simulation natively in the browser without lag.
+2. **Inject Faults:** Programmatically kill agents to study system resilience.
+3. **Analyze Recovery:** Understand bottleneck propagation in real time.
+
+Proceed to the [Architecture Overview](/getting-started/architecture/) to learn how the pieces fit together.

@@ -1,0 +1,25 @@
+---
+title: Architecture
+description: Overview of the Stasis AI technical stack.
+---
+
+Stasis AI relies on a modern, deeply optimized technical stack bridging the gap between high-performance systems programming and accessible web interfaces.
+
+## 1. Rust & Bevy Engine (The Core)
+
+The core logic, pathfinding algorithms, and spatial interactions are written in **Rust**.
+Rather than an object-oriented approach, we use **Bevy Engine’s Entity Component System (ECS)**. This provides cache locality and parallel execution paths, guaranteeing that computing 1,000+ agent paths per tick remains entirely bound to minimal latency limits.
+
+## 2. WebAssembly (Wasm) Compilation
+
+We extract the Bevy application state and compile the logic directly to **WebAssembly (Wasm)**. 
+Wasm operates near native speed inside modern web browsers, eliminating the need for a separate backend server for computing movements. There are **zero garbage collection pauses**, ensuring deterministic framing.
+
+## 3. React Three Fiber (The View)
+
+The frontend visualizes the WebAssembly output using **React Three Fiber (R3F)** and **Three.js**.
+We utilize `InstancedMesh` and optimized GLSL shaders to render robotic frames. When the React app receives a buffer of positions from the Wasm module, it updates instances via buffer attributes—a massive performance gain over mapping DOM nodes.
+
+## 4. Astro & TailwindCSS (The Shell)
+
+The website structure, routing, and this documentation is powered by **Astro**, ensuring an incredibly fast, static initial payload. All styling relies heavily on **Tailwind CSS**.
