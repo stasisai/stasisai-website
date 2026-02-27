@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <g transform="translate(256, 256) scale(1.6)" style="mix-blend-mode: multiply;">
+    <path d="M 0,-140 C 15,-40 40,-15 140,0 C 40,15 15,40 0,140 C -15,40 -40,15 -140,0 C -40,-15 -15,-40 0,-140 Z" fill="#3DB8E8" opacity="0.8" />
+    <path d="M 0,-140 C 15,-40 40,-15 140,0 C 40,15 15,40 0,140 C -15,40 -40,15 -140,0 C -40,-15 -15,-40 0,-140 Z" fill="#2882B5" opacity="0.6" transform="rotate(45)" />
+    <circle cx="0" cy="0" r="28" fill="#5CC8F0" opacity="0.9" />
+  </g>
+</svg>

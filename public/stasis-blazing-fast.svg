@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <g transform="translate(256, 256) scale(1.65)" style="mix-blend-mode: multiply;">
+    <path d="M -90,-20 C -90,-100 40,-120 90,-40 C 140,40 10,120 -50,90 C -110,60 -90,60 -90,-20 Z" fill="#FBBF24" opacity="0.85" />
+    <path d="M 60,-40 C 120,20 -10,140 -80,60 C -150,-20 30,-140 80,-90 C 130,-40 0,-100 60,-40 Z" fill="#F97316" opacity="0.85" />
+  </g>
+</svg>

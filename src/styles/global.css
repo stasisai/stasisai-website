@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #F5F2EE;
+  --color-brand-surface: #F0EDE9;
+  --color-brand-dark: #080808;
+  --color-brand-text: #0A0A0A;
+  --color-brand-text-secondary: #707070;
+  --color-brand-text-dark: #F0EDE9;
+  
+  --color-brand-accent-emerald: #047857; /* Variant 4 */
+  --color-brand-accent-red: #991B1B;
+
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "DM Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
+  }
+}
+
+/* Custom Overrides for Tech-Editorial System */
+.btn-primary {
+  display: inline-block;
+  background: var(--color-brand-dark);
+  color: var(--color-brand-text-dark);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-ghost {
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.08); /* 0,0,0,0.08 is the separator standard */
+  background: transparent;
+  color: var(--color-brand-text);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: var(--color-brand-surface);
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  color: var(--color-brand-text);
+  transition: opacity 0.2s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+}
+
+/* H1 with negative letter spacing */
+h1 {
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+h2 {
+  letter-spacing: -1px;
+}

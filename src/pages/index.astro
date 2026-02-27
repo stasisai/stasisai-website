@@ -1,0 +1,576 @@
+---
+import Layout from '../layouts/Layout.astro';
+import KineticGrid from '../components/KineticGrid.jsx';
+---
+
+<Layout title="Stasis AI — MAPF Fault Injection Simulator">
+
+  <!-- FIXED HEADER -->
+  <header class="site-header" id="main-header">
+    <a href="/" class="header-brand">
+      <img src="/logo-stasis-grey.svg" alt="Stasis AI" class="header-logo" />
+      <span class="header-name">Stasis</span>
+    </a>
+    <nav class="header-nav hidden-mobile">
+      <a href="/docs" class="nav-link">Docs</a>
+      <a href="/simulator" class="nav-link">Simulator</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="https://github.com/stasisai" class="nav-link" target="_blank">GitHub ↗</a>
+    </nav>
+    <button class="burger-btn" id="burger-btn" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- MOBILE OVERLAY MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="/docs" class="mobile-link">Docs</a>
+      <a href="/simulator" class="mobile-link">Simulator</a>
+      <a href="/blog" class="mobile-link">Blog</a>
+      <a href="/about" class="mobile-link">About Us</a>
+      <a href="https://github.com/stasisai" class="mobile-link" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+
+  <!-- SNAP SCROLL CONTAINER -->
+  <div class="snap-container">
+
+    <!-- ══════════ HERO ══════════ -->
+    <section class="hero-section">
+      <div class="hero-canvas-wrapper">
+        <KineticGrid client:only="react" />
+      </div>
+
+      <!-- Readability gradient -->
+      <div class="hero-gradient"></div>
+
+      <!-- Hero content -->
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            Inject faults.<br/>
+            <em>Analyze chaos.</em>
+          </h1>
+          <p class="hero-subtitle">
+            A blazing fast Multi-Agent Path Finding fault injection simulator.
+            Built in Rust, compiled to WebAssembly.
+          </p>
+          <div class="hero-cta">
+            <a href="/simulator" class="btn-primary">Run Simulation</a>
+            <a href="/docs" class="btn-docs">View Docs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <p>scroll</p>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ TECH NARRATIVE (DARK) ══════════ -->
+    <section class="dark-section">
+      <div class="section-inner">
+        <h2 class="dark-title">
+          Written in Rust.<br/>
+          <em>Compiled to WebAssembly.</em>
+        </h2>
+
+        <!-- Pillar 1: Blazing Fast -->
+        <div class="pillar-row">
+          <img src="/stasis-blazing-fast.svg" alt="Blazing Fast" class="pillar-icon" />
+          <div class="pillar-content">
+            <h3 class="pillar-title" style="color:#E8862A;">Blazing Fast</h3>
+            <p class="pillar-text">
+              Powered by <a href="https://bevyengine.org/" target="_blank" class="bevy-link"><strong>Bevy Engine</strong></a> and Rust's zero-cost abstractions. No garbage collector pauses. No runtime overhead. No compromises.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Research-Grade -->
+        <div class="pillar-row">
+          <img src="/stasis-research.svg" alt="Research Grade" class="pillar-icon" />
+          <div class="pillar-content">
+            <h3 class="pillar-title" style="color:#3DB8E8;">Research-Grade</h3>
+            <p class="pillar-text">
+              Built on state-of-the-art MAPF solvers — <strong>CBS, LaCAM, PIBT</strong>. Every algorithm implemented from peer-reviewed publications and validated against published benchmarks.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Fault Injection -->
+        <div class="pillar-row" style="border-bottom: 1px solid rgba(240,237,233,0.1);">
+          <img src="/stasis-fault.svg" alt="Fault Injection" class="pillar-icon" />
+          <div class="pillar-content">
+            <h3 class="pillar-title" style="color:#34D399;">Fault Injection</h3>
+            <p class="pillar-text">
+              Inject crash faults at any scale. Observe <strong>cascading failures</strong> propagate in real time across hundreds of concurrent agents. Measure recovery latency with precision.
+            </p>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="stat-value stat-red">[256]</span>
+            <span class="stat-label">Concurrent Agents</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value stat-green">[60 FPS]</span>
+            <span class="stat-label">Fluid Rendering</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">[0ms]</span>
+            <span class="stat-label">Latency Overhead</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ FEATURES ══════════ -->
+    <section class="features-section">
+      <div class="section-inner">
+        <h3 class="features-title">Deep <em>Inspection</em></h3>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-tag">Feature . 01</div>
+            <h4 class="card-title">Crash Faults</h4>
+            <p class="card-text">Simulate sudden hard failures. Observe instantaneous rerouting latency across dense networks and cascading delays.</p>
+          </div>
+          <div class="card">
+            <div class="card-tag">Feature . 02</div>
+            <h4 class="card-title">Congestion Heatmaps</h4>
+            <p class="card-text">Visualize invisible bottlenecks cascading through paths. Track heat persistence and pressure distribution in real time.</p>
+          </div>
+          <div class="card">
+            <div class="card-tag">Feature . 03</div>
+            <h4 class="card-title">SOTA Algorithms</h4>
+            <p class="card-text">Built on CBS, LaCAM, PIBT, and A* variants for accurate, state-of-the-art multi-agent routing and traffic modeling.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ FOOTER ══════════ -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Stasis AI</span>
+        <div class="footer-links">
+          <a href="/about">Story</a>
+          <a href="https://github.com/stasisai" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    ↑ SCROLL TO TOP
+  </button>
+
+  <script is:inline>
+    // Astro inline script guaranteed to run in client
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.querySelector('.snap-container');
+      const header = document.getElementById('main-header');
+      const backToTop = document.getElementById('back-to-top');
+      const burgerBtn = document.getElementById('burger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (!container || !header || !backToTop) return;
+
+      if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+          burgerBtn.classList.toggle('open');
+          mobileMenu.classList.toggle('open');
+          container.style.overflowY = mobileMenu.classList.contains('open') ? 'hidden' : 'scroll';
+        });
+        
+        const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            burgerBtn.classList.remove('open');
+            mobileMenu.classList.remove('open');
+            container.style.overflowY = 'scroll';
+          });
+        });
+      }
+
+      container.addEventListener('scroll', () => {
+        // Hide header and show back to top when scrolling down past 300px
+        if (container.scrollTop > 300) {
+          header.classList.add('header-hidden');
+          backToTop.classList.add('visible');
+        } else {
+          header.classList.remove('header-hidden');
+          backToTop.classList.remove('visible');
+        }
+      });
+
+      backToTop.addEventListener('click', () => {
+        // Temporarily disable scroll snapping to allow smooth scroll to top
+        container.style.scrollSnapType = 'none';
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Re-enable snapping after scrolling finishes
+        setTimeout(() => {
+          container.style.scrollSnapType = 'y mandatory';
+        }, 800);
+      });
+    });
+  </script>
+
+  <style>
+    /* ─── Reset & Variables ─────────────────────────────────── */
+    :root {
+      --bg: #F5F2EE;
+      --surface: #F0EDE9;
+      --dark: #080808;
+      --text: #0A0A0A;
+      --text-sec: #707070;
+      --text-dark: #F0EDE9;
+      --red: #991B1B;
+      --green: #047857;
+      --serif: 'Playfair Display', serif;
+      --mono: 'DM Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    /* ─── Snap Container ───────────────────────────────────── */
+    .snap-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ─── Header ───────────────────────────────────────────── */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(245,242,238,0.9);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    }
+    
+    .site-header.header-hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .header-brand {
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+    }
+    .header-logo { height: 28px; width: auto; }
+    .header-name {
+      font-family: var(--mono); font-weight: 500;
+      letter-spacing: 0.08em; color: var(--dark);
+      font-size: 14px; text-transform: uppercase;
+    }
+    .header-nav { 
+      display: flex; gap: 24px; align-items: center;
+    }
+
+    .nav-link {
+      font-family: var(--mono); text-transform: uppercase;
+      font-size: 12px; letter-spacing: 0.08em;
+      color: var(--text); text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-link:hover { opacity: 0.6; }
+
+    /* ─── Mobile Menu ──────────────────────────────────────── */
+    .burger-btn {
+      display: none; flex-direction: column; justify-content: space-between;
+      width: 28px; height: 18px; background: transparent; border: none;
+      cursor: pointer; z-index: 200; padding: 0;
+    }
+    .burger-btn span {
+      width: 100%; height: 2px; background: var(--dark); transition: all 0.3s ease;
+    }
+    .burger-btn.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .burger-btn.open span:nth-child(2) { opacity: 0; }
+    .burger-btn.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(245,242,238,0.98), rgba(240,237,233,0.98));
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      z-index: 150; display: flex; flex-direction: column; justify-content: center;
+      padding: 40px; opacity: 0; pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(-20px);
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .mobile-menu-inner { display: flex; flex-direction: column; gap: 32px; align-items: flex-start; }
+    .mobile-link { font-family: var(--serif); font-size: clamp(3rem, 10vw, 4rem); color: var(--dark); text-decoration: none; line-height: 1; letter-spacing: -1px; transition: opacity 0.2s; }
+    .mobile-link:hover { opacity: 0.6; }
+
+    /* ─── Hero Section ─────────────────────────────────────── */
+    .hero-section {
+      position: relative; width: 100%; height: 100vh;
+      overflow: hidden; background: var(--bg);
+      scroll-snap-align: start;
+    }
+    .hero-gradient {
+      position: absolute; top: 0; left: 0; bottom: 0; width: 55%; z-index: 10;
+      background: linear-gradient(to right, rgba(245,242,238,0.95) 60%, rgba(245,242,238,0) 100%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 15;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 48px; pointer-events: none;
+    }
+    .hero-text { max-width: 620px; pointer-events: auto; }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--text); margin-bottom: 24px;
+      line-height: 1.05; letter-spacing: -1.5px;
+    }
+    .hero-title em { color: rgba(10,10,10,0.35); font-style: italic; }
+    .hero-subtitle {
+      font-family: var(--sans); font-weight: 400;
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      color: var(--text); opacity: 0.7;
+      max-width: 440px; margin-bottom: 36px; line-height: 1.8;
+    }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-block; background: var(--dark); color: var(--text-dark);
+      font-family: var(--mono); font-size: 14px; text-transform: uppercase;
+      border-radius: 0; padding: 14px 28px; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s; letter-spacing: 0.05em;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-docs {
+      display: inline-block; background: var(--surface);
+      border: 2px solid var(--dark); color: var(--dark);
+      font-family: var(--mono); font-size: 14px; text-transform: uppercase;
+      border-radius: 0; padding: 12px 28px; cursor: pointer; text-decoration: none;
+      transition: background 0.2s; letter-spacing: 0.05em;
+    }
+    .btn-docs:hover { background: #E8E4DF; }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 28px; left: 50%;
+      transform: translateX(-50%); z-index: 20;
+      opacity: 0.25; text-align: center;
+    }
+    .scroll-hint p {
+      font-family: var(--mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 0.2em; color: var(--text);
+    }
+    .scroll-line {
+      width: 1px; height: 18px; background: var(--text);
+      margin: 6px auto 0; animation: scrollPulse 2s infinite;
+    }
+
+    /* ─── Dark Section ─────────────────────────────────────── */
+    .dark-section {
+      position: relative; z-index: 20; background: var(--dark);
+      width: 100%; min-height: 100vh; color: var(--text-dark);
+      display: flex; align-items: center; scroll-snap-align: start;
+    }
+    .section-inner {
+      max-width: 1100px; margin: 0 auto; padding: 64px 32px; width: 100%;
+    }
+    .dark-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4.5vw, 4rem);
+      color: var(--text-dark); letter-spacing: -1px;
+      line-height: 1.1; margin-bottom: 48px;
+    }
+    .dark-title em { color: rgba(240,237,233,0.35); }
+
+    .pillar-row {
+      display: flex; align-items: center; gap: 28px;
+      padding: 32px 0;
+      border-top: 1px solid rgba(240,237,233,0.1);
+      flex-wrap: wrap;
+    }
+    .pillar-icon { 
+      height: 64px; width: 64px; border-radius: 16px; 
+      background: var(--surface); padding: 12px;
+      object-fit: cover; flex-shrink: 0; 
+    }
+    .pillar-content { flex: 1; min-width: 240px; }
+    .pillar-title {
+      font-family: var(--mono); font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      margin-bottom: 8px; font-weight: 500;
+    }
+    .pillar-text {
+      font-family: var(--sans); font-weight: 300; font-size: 0.95rem;
+      color: rgba(240,237,233,0.55); max-width: 480px; line-height: 1.7;
+    }
+    .pillar-text strong { color: var(--text-dark); font-weight: 500; }
+    
+    .bevy-link {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: opacity 0.2s;
+    }
+    .bevy-link:hover { opacity: 0.7; }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      margin-top: 32px;
+    }
+    .stat { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .stat-value {
+      display: block; font-family: var(--serif);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      margin-bottom: 6px; font-weight: 400; letter-spacing: normal;
+      color: var(--text-dark);
+    }
+    .stat-red { color: var(--red); }
+    .stat-green { color: var(--green); }
+    .stat-label { color: rgba(240,237,233,0.45); }
+
+    /* ─── Features Section ─────────────────────────────────── */
+    .features-section {
+      position: relative; z-index: 20; background: var(--bg);
+      width: 100%; min-height: 100vh; display: flex; align-items: center;
+      scroll-snap-align: start;
+    }
+    .features-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      margin-bottom: 48px; letter-spacing: -0.5px;
+    }
+    .features-title em { font-style: italic; }
+
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .card {
+      background: var(--surface); border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 12px; padding: 32px;
+    }
+    .card-tag {
+      font-family: var(--mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--text-sec); margin-bottom: 24px;
+    }
+    .card-title {
+      font-family: var(--serif); font-size: 1.5rem; margin-bottom: 12px;
+    }
+    .card-text {
+      font-family: var(--sans); font-weight: 300;
+      color: var(--text-sec); line-height: 1.7; font-size: 0.9rem;
+    }
+
+    /* ─── Footer ───────────────────────────────────────────── */
+    .site-footer {
+      width: 100%; background: var(--bg); padding: 40px 32px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      position: relative; z-index: 20; scroll-snap-align: end;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy, .footer-links a {
+      font-family: var(--mono); font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--text-sec); text-decoration: none;
+    }
+    .footer-links { display: flex; gap: 24px; }
+
+    /* ─── Back to Top ──────────────────────────────────────── */
+    .back-to-top {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 90;
+      background: transparent;
+      border: none;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-sec);
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+    .back-to-top.visible {
+      opacity: 0.5;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      opacity: 1;
+      color: var(--text);
+    }
+
+    /* ─── Responsive ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-gradient { width: 100%; background: rgba(245,242,238,0.85); }
+      .hero-content { padding: 0 24px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; gap: 24px; margin-top: 40px; }
+      .dark-section, .features-section { min-height: auto; padding: 64px 0; }
+      .section-inner { padding: 48px 24px; }
+      
+      .pillar-row { flex-direction: row; align-items: flex-start; gap: 16px; padding: 24px 0; flex-wrap: nowrap; }
+      .pillar-icon { height: 48px; width: 48px; padding: 8px; border-radius: 12px; flex-shrink: 0; }
+      .pillar-content { flex: 1; min-width: 0; }
+      
+      .header-nav { gap: 16px; }
+      .back-to-top { bottom: 24px; right: 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .site-header { padding: 12px 20px; }
+      .header-logo { height: 22px; }
+      .header-name { font-size: 11px; }
+      .header-nav { display: none; }
+      .burger-btn { display: flex; }
+      .hidden-mobile { display: none; }
+      
+      .hero-canvas-wrapper { display: none; }
+      .hero-content { padding: 0 20px; height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+      .hero-title { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.05; }
+      
+      /* Make sections compact to fit in viewport viewport */
+      .dark-section, .features-section { min-height: 100vh; display: flex; align-items: center; padding: 0; }
+      .section-inner { padding: 32px 20px; width: 100%; }
+      .dark-title { font-size: 2.2rem; margin-bottom: 24px; }
+      .features-title { font-size: 2.2rem; margin-bottom: 32px; }
+      
+      .pillar-row { padding: 16px 0; flex-wrap: nowrap; gap: 16px; }
+      .pillar-title { font-size: 11px; margin-bottom: 4px; }
+      .pillar-text { font-size: 0.85rem; line-height: 1.5; }
+      .stats-grid { margin-top: 32px; gap: 16px; }
+      .stat-value { font-size: 1.4rem; }
+      .stat-label { font-size: 9px; }
+      
+      .card { padding: 24px; }
+      .card-title { font-size: 1.3rem; margin-bottom: 8px; }
+      .card-text { font-size: 0.85rem; line-height: 1.5; }
+      
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(1.4); }
+    }
+  </style>
+</Layout>
