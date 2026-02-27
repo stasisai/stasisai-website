@@ -1,38 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
 import KineticGrid from '../components/KineticGrid.jsx';
 ---
 
 <Layout title="Stasis AI — MAPF Fault Injection Simulator">
 
-  <!-- FIXED HEADER -->
-  <header class="site-header" id="main-header">
-    <a href="/" class="header-brand">
-      <img src="/logo-stasis-grey.svg" alt="Stasis AI" class="header-logo" />
-      <span class="header-name">Stasis</span>
-    </a>
-    <nav class="header-nav hidden-mobile">
-      <a href="/docs" class="nav-link">Docs</a>
-      <a href="/simulator" class="nav-link">Simulator</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/about" class="nav-link">About</a>
-      <a href="https://github.com/stasisai" class="nav-link" target="_blank">GitHub ↗</a>
-    </nav>
-    <button class="burger-btn" id="burger-btn" aria-label="Toggle Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </header>
-
-  <!-- MOBILE OVERLAY MENU -->
-  <div class="mobile-menu" id="mobile-menu">
-    <div class="mobile-menu-inner">
-      <a href="/docs" class="mobile-link">Docs</a>
-      <a href="/simulator" class="mobile-link">Simulator</a>
-      <a href="/blog" class="mobile-link">Blog</a>
-      <a href="/about" class="mobile-link">About Us</a>
-      <a href="https://github.com/stasisai" class="mobile-link" target="_blank">GitHub ↗</a>
-    </div>
-  </div>
+  <Header />
 
   <!-- SNAP SCROLL CONTAINER -->
   <div class="snap-container">
@@ -249,27 +223,8 @@ import KineticGrid from '../components/KineticGrid.jsx';
       const container = document.querySelector('.snap-container');
       const header = document.getElementById('main-header');
       const backToTop = document.getElementById('back-to-top');
-      const burgerBtn = document.getElementById('burger-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
 
       if (!container || !header || !backToTop) return;
-
-      if (burgerBtn && mobileMenu) {
-        burgerBtn.addEventListener('click', () => {
-          burgerBtn.classList.toggle('open');
-          mobileMenu.classList.toggle('open');
-          container.style.overflowY = mobileMenu.classList.contains('open') ? 'hidden' : 'scroll';
-        });
-        
-        const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
-        mobileLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            burgerBtn.classList.remove('open');
-            mobileMenu.classList.remove('open');
-            container.style.overflowY = 'scroll';
-          });
-        });
-      }
 
       container.addEventListener('scroll', () => {
         // Hide header and show back to top when scrolling down past 300px
@@ -321,7 +276,8 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
 
     /* ─── Header ───────────────────────────────────────────── */
-    .site-header {
+    /* These styles are now assumed to be part of the Header component's styling */
+    /* .site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       padding: 16px 32px;
       display: flex; align-items: center; justify-content: space-between;
@@ -356,10 +312,11 @@ import KineticGrid from '../components/KineticGrid.jsx';
       color: var(--text); text-decoration: none;
       transition: opacity 0.2s;
     }
-    .nav-link:hover { opacity: 0.6; }
+    .nav-link:hover { opacity: 0.6; } */
 
     /* ─── Mobile Menu ──────────────────────────────────────── */
-    .burger-btn {
+    /* These styles are now assumed to be part of the Header component's styling */
+    /* .burger-btn {
       display: none; flex-direction: column; justify-content: space-between;
       width: 28px; height: 18px; background: transparent; border: none;
       cursor: pointer; z-index: 200; padding: 0;
@@ -383,7 +340,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
     .mobile-menu.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .mobile-menu-inner { display: flex; flex-direction: column; gap: 32px; align-items: flex-start; }
     .mobile-link { font-family: var(--serif); font-size: clamp(3rem, 10vw, 4rem); color: var(--dark); text-decoration: none; line-height: 1; letter-spacing: -1px; transition: opacity 0.2s; }
-    .mobile-link:hover { opacity: 0.6; }
+    .mobile-link:hover { opacity: 0.6; } */
 
     /* ─── Hero Section ─────────────────────────────────────── */
     .hero-section {
@@ -490,7 +447,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .pillar-icon { 
       height: 64px; width: 64px; border-radius: 16px; 
-      background: var(--surface); padding: 12px;
+      background: var(--surface); padding: 4px;
       object-fit: cover;
     }
     .pillar-content { flex: 1; min-width: 240px; padding-top: 4px; }
@@ -607,18 +564,17 @@ import KineticGrid from '../components/KineticGrid.jsx';
 
     /* ─── Community Section ────────────────────────────────── */
     .community-section {
-      width: 100%; background: var(--bg); padding: 80px 0;
+      width: 100%; background: var(--dark); color: #F0EDE9; padding: 80px 0;
       position: relative; z-index: 20; scroll-snap-align: start;
-      border-top: 1px dashed rgba(0,0,0,0.08);
     }
     .community-title {
       font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.5rem);
       margin-bottom: 24px; letter-spacing: -0.5px;
     }
-    .community-title em { font-style: italic; color: rgba(10,10,10,0.4); }
+    .community-title em { font-style: italic; color: rgba(240,237,233,0.5); }
     .community-intro {
       font-family: var(--sans); font-weight: 300; font-size: 1rem;
-      color: var(--text-sec); max-width: 640px; margin-bottom: 48px;
+      color: rgba(240,237,233,0.6); max-width: 640px; margin-bottom: 48px;
       line-height: 1.6;
     }
     
@@ -626,25 +582,27 @@ import KineticGrid from '../components/KineticGrid.jsx';
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
     }
     .eco-card {
-      background: transparent; border-left: 2px solid rgba(0,0,0,0.1);
-      padding: 0 0 0 24px;
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px; padding: 32px;
+      transition: border-color 0.3s, background 0.3s;
     }
+    .eco-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); }
     .eco-title {
       font-family: var(--mono); font-size: 11px; text-transform: uppercase;
-      letter-spacing: 0.12em; color: var(--text-dark); margin-bottom: 12px;
+      letter-spacing: 0.12em; color: rgba(240,237,233,0.9); margin-bottom: 12px;
     }
     .eco-text {
       font-family: var(--sans); font-weight: 300; font-size: 0.9rem;
-      color: var(--text-sec); margin-bottom: 24px; line-height: 1.6;
+      color: rgba(240,237,233,0.5); margin-bottom: 24px; line-height: 1.6;
     }
     .eco-text strong {
-      font-weight: 500; color: var(--dark);
+      font-weight: 500; color: rgba(240,237,233,0.8);
     }
     .eco-link {
       display: inline-block; font-family: var(--mono); font-size: 10px;
-      text-transform: uppercase; letter-spacing: 0.1em; color: var(--dark);
+      text-transform: uppercase; letter-spacing: 0.1em; color: rgba(240,237,233,0.9);
       text-decoration: none; padding-bottom: 4px;
-      border-bottom: 1px solid rgba(0,0,0,0.1); transition: opacity 0.2s;
+      border-bottom: 1px solid rgba(255,255,255,0.2); transition: opacity 0.2s;
     }
     .eco-link:hover { opacity: 0.6; }
 
@@ -705,7 +663,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
       .section-inner { padding: 48px 24px; }
       
       .pillar-row { flex-direction: row; align-items: flex-start; gap: 16px; padding: 24px 0; flex-wrap: nowrap; }
-      .pillar-icon { height: 48px; width: 48px; padding: 8px; border-radius: 12px; flex-shrink: 0; }
+      .pillar-icon { height: 48px; width: 48px; padding: 4px; border-radius: 12px; flex-shrink: 0; }
       .pillar-content { flex: 1; min-width: 0; }
       
       .header-nav { gap: 16px; }
@@ -713,13 +671,6 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
 
     @media (max-width: 600px) {
-      .site-header { padding: 12px 20px; }
-      .header-logo { height: 22px; }
-      .header-name { font-size: 11px; }
-      .header-nav { display: none; }
-      .burger-btn { display: flex; }
-      .hidden-mobile { display: none; }
-      
       .hero-canvas-wrapper { display: none; }
       .hero-content { padding: 0 20px; height: 100vh; display: flex; flex-direction: column; justify-content: center; }
       .hero-title { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.05; }
