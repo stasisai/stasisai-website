@@ -8,7 +8,21 @@ Stasis AI relies on a modern, deeply optimized technical stack bridging the gap 
 ## 1. Rust & Bevy Engine (The Core)
 
 The core logic, pathfinding algorithms, and spatial interactions are written in **Rust**.
-Rather than an object-oriented approach, we use **Bevy Engine’s Entity Component System (ECS)**. This provides cache locality and parallel execution paths, guaranteeing that computing 1,000+ agent paths per tick remains entirely bound to minimal latency limits.
+Rather than an object-oriented approach, we use **Bevy Engine’s Entity Component System (ECS)**. This provides cache locality and parallel execution paths. By breaking our agents into fine-grained components, we guarantee that computing 1,000+ agent paths per tick remains entirely bound to minimal latency limits.
+
+Here is a glimpse of our fundamental agent component structure in the engine:
+
+```rust
+use bevy::prelude::*;
+use std::collections::VecDeque;
+
+#[derive(Component, Debug)]
+pub struct LogicalAgent {
+    pub current_pos: IVec2,
+    pub goal_pos: IVec2,
+    pub planned_path: VecDeque<Action>,
+}
+```
 
 ## 2. WebAssembly (Wasm) Compilation
 

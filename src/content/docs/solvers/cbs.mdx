@@ -13,6 +13,34 @@ At the high level, CBS uses a Constraint Tree (CT). Each node in the CT contains
 
 If the paths have no conflicts (e.g., two agents occupying the same vertex at the same time), the node represents a valid solution. If a conflict occurs, the algorithm splits the node into two child nodes, adding a new constraint to each to prevent the conflict.
 
+Inside Stasis AI, the Constraint Tree components currently look like this in Rust:
+
+```rust
+#[derive(Debug, Clone)]
+enum Conflict {
+    Vertex {
+        agent_a: usize,
+        agent_b: usize,
+        pos: IVec2,
+        time: u64,
+    },
+    Edge {
+        agent_a: usize,
+        agent_b: usize,
+        pos_a: IVec2,
+        pos_b: IVec2,
+        time: u64,
+    },
+}
+
+#[derive(Debug, Clone)]
+struct CtNode {
+    constraints: Constraints,
+    solution: Vec<Vec<Action>>,
+    cost: u64,
+}
+```
+
 ## Low-Level Search
 At the low level, CBS uses an algorithm like A* to find the optimal path for an individual agent given a specific set of constraints inherited from the high-level node.
 
