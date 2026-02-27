@@ -25,3 +25,20 @@ const { title } = Astro.props;
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+  /* ─── Global Reset & Variables ─────────────────────────── */
+  :root {
+    --bg: #F5F2EE;
+    --surface: #F0EDE9;
+    --dark: #080808;
+    --text: #0A0A0A;
+    --text-sec: #707070;
+    --text-dark: #F0EDE9;
+    --red: #991B1B;
+    --green: #047857;
+    --serif: 'Playfair Display', serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+</style>
