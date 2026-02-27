@@ -21,24 +21,35 @@ export default defineConfig({
         ],
       },
       {
-        label: 'Core MAPF Solvers',
+        label: 'Engine & ECS (Bevy)',
+        items: [
+          { label: 'Core ECS Design', slug: 'engine-ecs/core-design' },
+          { label: 'Agent Components', slug: 'engine-ecs/agent-components' },
+          { label: 'Grid Structures', slug: 'engine-ecs/grid-structures' }
+        ],
+      },
+      {
+        label: 'MAPF Solvers',
         items: [
           { label: 'CBS (Conflict-Based Search)', slug: 'solvers/cbs' },
-          { label: 'PIBT (Priority Inheritance)', slug: 'solvers/pibt' },
-          { label: 'LaCAM', slug: 'solvers/lacam' }
+          { label: 'A* Space-Time', slug: 'solvers/astar-space-time' },
+          { label: 'PIBT', slug: 'solvers/pibt' }
         ],
       },
       {
-        label: 'Fault Injection Engine',
+        label: 'Fault Injection Mechanics',
         items: [
-          { label: 'Fault Models', slug: 'fault-engine/models' },
-          { label: 'Contagion Logic', slug: 'fault-engine/contagion' },
-          { label: 'Metrics & Profiling', slug: 'fault-engine/metrics' }
+          { label: 'Chaos Engineering', slug: 'fault-engine/chaos-engineering' },
+          { label: 'Crash Faults', slug: 'fault-engine/crash-faults' },
+          { label: 'Delay Faults', slug: 'fault-engine/delay-faults' }
         ],
       },
       {
-        label: 'API & Configuration',
-        autogenerate: { directory: 'reference' },
+        label: 'Scenarios & Replays',
+        items: [
+          { label: 'Scenario Loading', slug: 'scenarios/scenario-loading' },
+          { label: 'Deterministic Replays', slug: 'scenarios/deterministic-replays' }
+        ]
       },
     ],
   }), react()],
