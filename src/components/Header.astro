@@ -123,27 +123,5 @@
         });
       });
     }
-
-    // Intercept logo clicks on the homepage to smooth scroll instead of reload
-    const logoLink = document.querySelector('.header-brand');
-    logoLink?.addEventListener('click', (e) => {
-      const path = window.location.pathname;
-      if (path === '/' || path === '/index.html') {
-        e.preventDefault();
-        const snapContainer = document.querySelector('.snap-container');
-        if (snapContainer) {
-          snapContainer.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        // Auto-close menu if open
-        if (burgerBtn?.classList.contains('open')) {
-          burgerBtn.classList.remove('open');
-          mobileMenu.classList.remove('open');
-          document.body.style.overflowY = 'auto';
-        }
-      }
-    });
-
   });
 </script>

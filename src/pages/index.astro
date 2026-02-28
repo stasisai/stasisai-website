@@ -226,6 +226,9 @@ import KineticGrid from '../components/KineticGrid.jsx';
   </button>
 
   <script is:inline>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
     // Astro inline script guaranteed to run in client
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.querySelector('.snap-container');
@@ -263,7 +266,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
     .snap-container {
       height: 100vh;
       height: 100dvh;
-      width: 100vw;
+      width: 100%;
       overflow-y: scroll;
       overflow-x: hidden;
       scroll-snap-type: y mandatory;
