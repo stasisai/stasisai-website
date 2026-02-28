@@ -19,4 +19,31 @@ MAFIS exists to model exactly this scenario. By writing our engine structurally 
 2. **Inject Faults:** Programmatically kill agents or inject deterministic faults to study system resilience.
 3. **Analyze Recovery:** Understand bottleneck propagation in real time.
 
+### Testing the Engine
+
+Here is a quick look at how the ECS system initializes our agents. As you can see, Rust allows us to build with zero-cost abstractions:
+
+```rust
+use bevy::prelude::*;
+
+#[derive(Component)]
+struct Agent {
+    id: usize,
+    target: Vec2,
+    is_faulted: bool,
+}
+
+fn initialize_sim(mut commands: Commands) {
+    for i in 0..256 {
+        commands.spawn(Agent {
+            id: i,
+            target: Vec2::new(10.0, 10.0),
+            is_faulted: false,
+        });
+    }
+    
+    println!("Chaos Engine Started!");
+}
+```
+
 Proceed to the [Architecture Overview](/getting-started/architecture/) to learn how the pieces fit together.

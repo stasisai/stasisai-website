@@ -56,30 +56,37 @@ const navGroups = [
 <Layout title={`${title} | MAFIS Docs`}>
   <Header />
 
-  <div class="docs-container">
+  <div class="docs-container wrapper-grid">
     <!-- Desktop Sidebar -->
     <aside class="docs-sidebar">
       <div class="sidebar-inner">
-        {navGroups.map(group => (
-          <div class="sidebar-group">
-            <h4 class="group-title">{group.title}</h4>
-            <ul class="group-list">
-              {group.items.map(item => {
-                const isActive = currentSlug === item.slug;
-                return (
-                  <li>
-                    <a 
-                      href={`/docs/${item.slug}`} 
-                      class={`sidebar-link ${isActive ? 'active' : ''}`}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ))}
+        {navGroups.map(group => {
+          // Auto-expand the category if one of its items is the current page
+          const hasActive = group.items.some(item => currentSlug === item.slug);
+          return (
+            <details class="sidebar-group" open={hasActive || undefined}>
+              <summary class="group-title">
+                {group.title}
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="chevron"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <ul class="group-list">
+                {group.items.map(item => {
+                  const isActive = currentSlug === item.slug;
+                  return (
+                    <li>
+                      <a 
+                        href={`/docs/${item.slug}`} 
+                        class={`sidebar-link ${isActive ? 'active' : ''}`}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
+          );
+        })}
       </div>
     </aside>
 
@@ -96,18 +103,29 @@ const navGroups = [
 </Layout>
 
 <style>
+  /* Subtle Grid Pattern */
+  .wrapper-grid {
+    background-color: var(--bg);
+    background-image: 
+      linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center top;
+  }
+
   .docs-container {
     display: flex;
     min-height: 100vh;
-    padding-top: 80px; /* Offset for header */
-    background-color: var(--bg);
+    padding-top: 60px; /* Aligned with header height to remove dead space */
   }
 
+  /* ─── Sidebar ─── */
   .docs-sidebar {
     width: 280px;
     flex-shrink: 0;
     border-right: 1px solid rgba(0,0,0,0.06);
-    background-color: var(--surface);
+    background-color: rgba(240,237,233, 0.85); /* Slightly transparent to let grid show */
+    backdrop-filter: blur(10px);
     display: none;
   }
   @media (min-width: 768px) {
@@ -115,80 +133,146 @@ const navGroups = [
   }
 
   .sidebar-inner {
-    padding: 40px 32px;
+    padding: 32px;
     position: sticky;
-    top: 80px;
-    max-height: calc(100vh - 80px);
+    top: 60px;
+    max-height: calc(100vh - 60px);
     overflow-y: auto;
   }
 
   .sidebar-group {
-    margin-bottom: 32px;
+    margin-bottom: 8px;
+  }
+
+  /* Remove default summary marker */
+  .sidebar-group summary::-webkit-details-marker {
+    display: none;
+  }
+  .sidebar-group summary {
+    list-style: none;
   }
 
   .group-title {
     font-family: var(--mono);
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     color: var(--text-sec);
-    margin-bottom: 12px;
+    padding: 12px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: color 0.2s;
+  }
+  .group-title:hover {
+    color: var(--dark);
+  }
+
+  .chevron {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  details[open] .chevron {
+    transform: rotate(180deg);
   }
 
   .group-list {
     list-style: none;
-    padding: 0; margin: 0;
+    padding: 12px 0 16px 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
+    animation: slideDown 0.3s ease-out forwards;
+    transform-origin: top;
+  }
+  
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px) scaleY(0.95); }
+    to { opacity: 1; transform: translateY(0) scaleY(1); }
   }
 
   .sidebar-link {
     font-family: var(--sans);
-    font-size: 0.95rem;
-    color: var(--text);
+    font-size: 0.9rem;
+    color: var(--text-sec);
     text-decoration: none;
-    opacity: 0.7;
-    transition: opacity 0.2s, color 0.2s;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-left: -12px; /* Pull into padding to align text visually */
+    transition: all 0.2s;
   }
   
   .sidebar-link:hover {
-    opacity: 1;
     color: var(--dark);
+    background-color: rgba(0,0,0,0.04);
+    transform: translateX(4px);
   }
 
   .sidebar-link.active {
-    opacity: 1;
-    font-weight: 600;
     color: var(--dark);
-  }
-  .sidebar-link.active::before {
-    content: "— ";
-    color: var(--text-sec);
+    font-weight: 500;
+    background-color: rgba(0,0,0,0.06);
+    border-left: 2px solid var(--dark);
+    border-radius: 0 6px 6px 0;
+    padding-left: 10px;
   }
 
+  /* ─── Main Content ─── */
   .docs-main {
     flex: 1;
-    padding: 40px 24px 80px;
+    padding: 32px 24px 80px;
     min-width: 0; /* Prevents overflow */
   }
 
   @media (min-width: 768px) {
-    .docs-main { padding: 64px 80px; }
+    .docs-main { padding: 48px 80px; }
   }
 
-  /* Custom Prose Styles for Markdown */
+  /* Custom Prose Styles for Markdown (Tech-Editorial) */
   .prose-container {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
   }
   
-  .prose-container :global(h1) {
+  /* ALL Headers in Playfair Display */
+  .prose-container :global(h1),
+  .prose-container :global(h2),
+  .prose-container :global(h3),
+  .prose-container :global(h4),
+  .prose-container :global(h5) {
     font-family: var(--serif);
+    color: var(--dark);
+    letter-spacing: -0.5px;
+  }
+
+  .prose-container :global(h1) {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
-    letter-spacing: -1px;
-    margin-bottom: 24px;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
     line-height: 1.1;
+  }
+
+  .prose-container :global(h2) {
+    font-size: 2rem;
+    margin-top: 56px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 8px;
+  }
+
+  .prose-container :global(h3) {
+    font-size: 1.5rem;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+
+  .prose-container :global(h4) {
+    font-size: 1.25rem;
+    margin-top: 32px;
+    margin-bottom: 12px;
   }
 
   .lead-desc {
@@ -201,28 +285,11 @@ const navGroups = [
     padding-bottom: 32px;
   }
 
-  .prose-container :global(h2) {
-    font-family: var(--sans);
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 48px;
-    margin-bottom: 16px;
-    letter-spacing: -0.5px;
-  }
-
-  .prose-container :global(h3) {
-    font-family: var(--sans);
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-top: 32px;
-    margin-bottom: 12px;
-  }
-
   .prose-container :global(p) {
     font-family: var(--sans);
     font-size: 1rem;
     color: #2A2A2A;
-    line-height: 1.7;
+    line-height: 1.8;
     margin-bottom: 24px;
   }
 
@@ -231,6 +298,7 @@ const navGroups = [
     margin-bottom: 24px;
     font-family: var(--sans);
     line-height: 1.7;
+    color: #2A2A2A;
   }
   
   .prose-container :global(li) {
@@ -239,11 +307,29 @@ const navGroups = [
 
   .prose-container :global(strong) {
     font-weight: 600;
+    color: var(--dark);
   }
 
+  .prose-container :global(blockquote) {
+    border-left: 3px solid var(--dark);
+    padding-left: 24px;
+    margin-left: 0;
+    font-style: italic;
+    color: var(--text-sec);
+    background: rgba(0,0,0,0.02);
+    padding: 16px 24px;
+    border-radius: 0 8px 8px 0;
+  }
+  .prose-container :global(blockquote p) {
+    margin-bottom: 0;
+  }
+
+  /* ─── Code Blocks (Rust compatibility) ─── */
+  /* Astro uses Shiki for code highlighting automatically, we just style the wrapper */
+  .prose-container :global(.astro-code),
   .prose-container :global(pre) {
-    background-color: var(--dark) !important;
-    color: var(--text-dark);
+    background-color: #1A1A1A !important; /* Dark solid background for contrast */
+    color: #E5E5E5;
     padding: 24px;
     border-radius: 8px;
     overflow-x: auto;
@@ -251,18 +337,25 @@ const navGroups = [
     font-family: var(--mono);
     font-size: 0.9rem;
     line-height: 1.5;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.05);
   }
 
+  /* Inline code snippets */
   .prose-container :global(code) {
     font-family: var(--mono);
-    background: rgba(0,0,0,0.05);
+    background: rgba(0,0,0,0.06);
+    color: var(--red); /* Techy accent color */
     padding: 2px 6px;
     border-radius: 4px;
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
 
   .prose-container :global(pre code) {
     background: transparent;
+    color: inherit;
     padding: 0;
+    border-radius: 0;
   }
 </style>
+
