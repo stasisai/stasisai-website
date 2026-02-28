@@ -401,7 +401,8 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .hero-gradient {
       position: absolute; top: 0; left: 0; bottom: 0; width: 55%; z-index: 10;
-      background: linear-gradient(to right, rgba(245,242,238,0.95) 60%, rgba(245,242,238,0) 100%);
+      /* Use a gradient derived from --bg */
+      background: linear-gradient(to right, var(--bg) 50%, transparent 100%);
       pointer-events: none;
     }
     .hero-content {
@@ -416,7 +417,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
       color: var(--text); margin-bottom: 24px;
       line-height: 1.05; letter-spacing: -1.5px;
     }
-    .hero-title em { color: rgba(10,10,10,0.35); font-style: italic; }
+    .hero-title em { color: var(--text); opacity: 0.35; font-style: italic; }
     .hero-subtitle {
       font-family: var(--sans); font-weight: 400;
       font-size: clamp(0.95rem, 1.5vw, 1.1rem);
@@ -454,13 +455,14 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .scroll-line {
       width: 1px; height: 18px; background: var(--text);
+      opacity: 0.5;
       margin: 6px auto 0; animation: scrollPulse 2s infinite;
     }
 
     /* ─── Dark Section ─────────────────────────────────────── */
     .dark-section {
-      position: relative; z-index: 20; background: var(--dark);
-      width: 100%; min-height: 100vh; color: var(--text-dark);
+      position: relative; z-index: 20; background: #080808;
+      width: 100%; min-height: 100vh; color: #F0EDE9;
       display: flex; align-items: center; scroll-snap-align: start;
     }
     .section-inner {
@@ -469,10 +471,10 @@ import KineticGrid from '../components/KineticGrid.jsx';
     .dark-title {
       font-family: var(--serif);
       font-size: clamp(2rem, 4.5vw, 4rem);
-      color: var(--text-dark); letter-spacing: -1px;
+      color: #F0EDE9; letter-spacing: -1px;
       line-height: 1.1; margin-bottom: 48px;
     }
-    .dark-title em { color: rgba(240,237,233,0.35); }
+    .dark-title em { color: #F0EDE9; opacity: 0.35; }
 
     .pillar-group:hover .pillar-row { opacity: 0.3; }
     .pillar-group .pillar-row:hover { opacity: 1; transform: translateX(8px); }
@@ -480,12 +482,12 @@ import KineticGrid from '../components/KineticGrid.jsx';
     .pillar-row {
       display: flex; align-items: flex-start; gap: 32px;
       padding: 32px 0;
-      border-top: 1px solid rgba(240,237,233,0.1);
+      border-top: 1px solid rgba(240,237,233, 0.1);
       flex-wrap: wrap;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .pillar-group .pillar-row:last-child {
-      border-bottom: 1px solid rgba(240,237,233,0.1);
+      border-bottom: 1px solid rgba(240,237,233, 0.1);
     }
 
     .pillar-icon-box { 
@@ -493,12 +495,12 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .pillar-mod {
       position: absolute; top: -14px; left: 0;
-      font-family: var(--mono); font-size: 8px; color: rgba(240,237,233,0.3);
+      font-family: var(--mono); font-size: 8px; color: #F0EDE9; opacity: 0.3;
       letter-spacing: 0.1em;
     }
     .pillar-icon { 
       height: 64px; width: 64px; border-radius: 16px; 
-      background: var(--surface); padding: 4px;
+      background: rgba(255,255,255,0.05); padding: 4px;
       object-fit: cover;
     }
     .pillar-content { flex: 1; min-width: 240px; padding-top: 4px; }
@@ -514,7 +516,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .pillar-text {
       font-family: var(--sans); font-weight: 300; font-size: 0.95rem;
-      color: rgba(240,237,233,0.55); max-width: 480px; line-height: 1.7;
+      color: #F0EDE9; opacity: 0.55; max-width: 480px; line-height: 1.7;
     }
     
     .bevy-link {
@@ -535,14 +537,14 @@ import KineticGrid from '../components/KineticGrid.jsx';
       display: block; font-family: var(--serif);
       font-size: clamp(1.8rem, 3.5vw, 2.5rem);
       margin-bottom: 6px; font-weight: 400; letter-spacing: normal;
-      color: var(--text-dark);
+      color: #F0EDE9;
       line-height: 1.1;
     }
-    .stat-label { color: rgba(240,237,233,0.45); display: inline-block; margin-bottom: 12px; font-size: 11px; }
+    .stat-label { color: #F0EDE9; opacity: 0.45; display: inline-block; margin-bottom: 12px; font-size: 11px; }
     .stat-red { color: var(--red); text-shadow: 0 0 16px rgba(153, 27, 27, 0.4); }
     .stat-green { color: var(--green); text-shadow: 0 0 16px rgba(4, 120, 87, 0.4); }
     .stat-bar { 
-      width: 100%; max-width: 140px; height: 2px; background: rgba(240,237,233,0.1); 
+      width: 100%; max-width: 140px; height: 2px; background: rgba(240,237,233, 0.1); 
       border-radius: 1px; overflow: hidden; 
     }
     .stat-fill { 
@@ -568,7 +570,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .card {
       position: relative; overflow: hidden;
-      background: var(--surface); border: 1px solid rgba(0,0,0,0.08);
+      background: var(--surface); border: 1px solid var(--border);
       border-radius: 12px; padding: 32px;
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       cursor: default;
@@ -593,7 +595,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
       color: var(--text-sec);
     }
     .card-title {
-      font-family: var(--serif); font-size: 1.5rem; margin-bottom: 12px; position: relative; z-index: 2;
+      font-family: var(--serif); font-size: 1.5rem; margin-bottom: 12px; position: relative; z-index: 2; color: var(--text);
     }
     .card-text {
       font-family: var(--sans); font-weight: 300;
@@ -605,8 +607,11 @@ import KineticGrid from '../components/KineticGrid.jsx';
     .m-dot { width: 6px; height: 6px; border-radius: 50%; }
     .m-dot-green { background: var(--green); }
     .m-dot-red { background: var(--red); }
-    .m-line { width: 12px; height: 1px; background: rgba(0,0,0,0.2); }
-    .m-line-broken { background: repeating-linear-gradient(90deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2) 2px, transparent 2px, transparent 4px); }
+    .m-line { width: 12px; height: 1px; background: var(--text); opacity: 0.2; }
+    .m-line-broken { 
+      background: repeating-linear-gradient(90deg, var(--text), var(--text) 2px, transparent 2px, transparent 4px); 
+      opacity: 0.2;
+    }
     @keyframes pulseViz { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } 100% { opacity: 1; transform: scale(1); } }
     .pulse { animation: pulseViz 1.5s infinite; }
 
@@ -617,22 +622,22 @@ import KineticGrid from '../components/KineticGrid.jsx';
 
     .micro-viz-matrix { 
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px 4px;
-      font-family: var(--mono); font-size: 8px; color: rgba(0,0,0,0.3); line-height: 1;
+      font-family: var(--mono); font-size: 8px; color: var(--text); opacity: 0.3; line-height: 1;
     }
 
     /* ─── Community Section ────────────────────────────────── */
     .community-section {
-      width: 100%; background: var(--dark); color: #F0EDE9; padding: 80px 0;
+      width: 100%; background: #080808; color: #F0EDE9; padding: 80px 0;
       position: relative; z-index: 20; scroll-snap-align: start;
     }
     .community-title {
       font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.5rem);
       margin-bottom: 24px; letter-spacing: -0.5px;
     }
-    .community-title em { font-style: italic; color: rgba(240,237,233,0.5); }
+    .community-title em { font-style: italic; color: #F0EDE9; opacity: 0.5; }
     .community-intro {
       font-family: var(--sans); font-weight: 300; font-size: 1rem;
-      color: rgba(240,237,233,0.6); max-width: 640px; margin-bottom: 48px;
+      color: #F0EDE9; opacity: 0.6; max-width: 640px; margin-bottom: 48px;
       line-height: 1.6;
     }
     
@@ -640,34 +645,34 @@ import KineticGrid from '../components/KineticGrid.jsx';
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
     }
     .eco-card {
-      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
       border-radius: 8px; padding: 32px;
       transition: border-color 0.3s, background 0.3s;
     }
-    .eco-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); }
+    .eco-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); }
     .eco-title {
       font-family: var(--mono); font-size: 11px; text-transform: uppercase;
-      letter-spacing: 0.12em; color: rgba(240,237,233,0.9); margin-bottom: 12px;
+      letter-spacing: 0.12em; color: #F0EDE9; opacity: 0.9; margin-bottom: 12px;
     }
     .eco-text {
       font-family: var(--sans); font-weight: 300; font-size: 0.9rem;
-      color: rgba(240,237,233,0.5); margin-bottom: 24px; line-height: 1.6;
+      color: #F0EDE9; opacity: 0.5; margin-bottom: 24px; line-height: 1.6;
     }
     .eco-text strong {
-      font-weight: 500; color: rgba(240,237,233,0.8);
+      font-weight: 500; color: #F0EDE9; opacity: 0.8;
     }
     .eco-link {
       display: inline-block; font-family: var(--mono); font-size: 10px;
-      text-transform: uppercase; letter-spacing: 0.1em; color: rgba(240,237,233,0.9);
+      text-transform: uppercase; letter-spacing: 0.1em; color: #F0EDE9; opacity: 0.9;
       text-decoration: none; padding-bottom: 4px;
-      border-bottom: 1px solid rgba(255,255,255,0.2); transition: opacity 0.2s;
+      border-bottom: 1px solid rgba(255,255,255,0.15); transition: opacity 0.2s;
     }
     .eco-link:hover { opacity: 0.6; }
 
     /* ─── Footer ───────────────────────────────────────────── */
     .site-footer {
       width: 100%; background: var(--bg); padding: 40px 32px;
-      border-top: 1px solid rgba(0,0,0,0.08);
+      border-top: 1px solid var(--border);
       position: relative; z-index: 20; scroll-snap-align: end;
     }
     .footer-inner {
@@ -712,7 +717,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
 
     /* ─── Responsive ───────────────────────────────────────── */
     @media (max-width: 900px) {
-      .hero-gradient { width: 100%; background: rgba(245,242,238,0.85); }
+      .hero-gradient { width: 100%; background: linear-gradient(to right, var(--bg) 60%, transparent 100%); }
       .hero-content { padding: 0 24px; }
       .cards-grid { grid-template-columns: 1fr; }
       .ecosystem-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -734,7 +739,7 @@ import KineticGrid from '../components/KineticGrid.jsx';
       .hero-title { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.05; }
       
       /* Make dark section single viewport */
-      .dark-section { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding: 0; background-color: var(--dark); }
+      .dark-section { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding: 0; background-color: #080808; }
       
       /* Features section allowed to scroll to respect rich content height */
       .features-section { min-height: auto; padding: 64px 0; display: block; }

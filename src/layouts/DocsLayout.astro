@@ -240,18 +240,18 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   .docs-container {
     display: flex;
     min-height: 100vh;
-    padding-top: 60px; /* Aligned with header height to remove dead space */
+    padding-top: 70px; /* Aligned with header height to remove dead space */
   }
 
   /* ─── Mobile Docs Topbar ─── */
   .docs-mobile-topbar {
     display: none;
     padding: 12px 24px;
-    background: rgba(245,242,238,0.95);
+    background: var(--surface);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid var(--border);
     position: sticky;
-    top: 60px; /* Below main header */
+    top: 70px; /* Below main header */
     z-index: 90;
   }
   .docs-menu-btn {
@@ -282,7 +282,7 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     
     /* Default offcanvas for mobile */
     position: fixed;
-    top: 108px; /* 60px header + 48px topbar */
+    top: 111px; /* 69px header + 42px topbar */
     bottom: 0;
     left: 0;
     transform: translateX(-100%);
@@ -312,8 +312,8 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   .sidebar-inner {
     padding: 32px 24px;
     position: sticky;
-    top: 60px;
-    max-height: calc(100vh - 60px);
+    top: 70px;
+    max-height: calc(100vh - 70px);
     overflow-y: auto;
   }
   

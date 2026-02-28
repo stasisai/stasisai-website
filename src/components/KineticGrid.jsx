@@ -410,8 +410,7 @@ function Simulation({ stasisCell, hoveredCell }) {
     );
 }
 
-// ─── Infinite Grid ──────────────────────────────────────────────────
-function InfiniteGrid() {
+function InfiniteGrid({ themeState }) {
     const gridLines = useMemo(() => {
         const SIZE = 60;
         const positions = [];
@@ -439,21 +438,7 @@ function InfiniteGrid() {
             colors.push(c.r, c.g, c.b, c.r, c.g, c.b);
         }
         return { positions: new Float32Array(positions), colors: new Float32Array(colors) };
-    }, []);
-
-    // Effect to force re-render when theme changes using a mutation observer on html class
-    const [, setThemeState] = useState(0);
-    useEffect(() => {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    setThemeState(prev => prev + 1);
-                }
-            })
-        });
-        observer.observe(document.documentElement, { attributes: true });
-        return () => observer.disconnect();
-    }, []);
+    }, [themeState]); // Depend on themeState to rebuild grid colors
 
     return (
         <lineSegments>
@@ -467,13 +452,13 @@ function InfiniteGrid() {
 }
 
 // ─── Floor ──────────────────────────────────────────────────────────
-function GridFloor({ onClick, onHover }) {
+function GridFloor({ onClick, onHover, themeState }) {
     const offsetX = -(GRID_W - 1) / 2;
     const offsetZ = -(GRID_H - 1) / 2;
 
     return (
         <>
-            <InfiniteGrid />
+            <InfiniteGrid themeState={themeState} />
             <mesh
                 rotation={[-Math.PI / 2, 0, 0]}
                 position={[0, 0.005, 0]}
@@ -509,16 +494,32 @@ function Scene() {
     const handleClick = useCallback((cell) => setStasisCell(prev => prev ? prev : { ...cell }), []);
     const handleHover = useCallback((cell) => setHoveredCell(cell), []);
 
+    // Force re-render when theme changes using a mutation observer on html class
+    const [themeState, setThemeState] = useState(0);
+    useEffect(() => {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    setThemeState(prev => prev + 1);
+                }
+            })
+        });
+        observer.observe(document.documentElement, { attributes: true });
+        return () => observer.disconnect();
+    }, []);
+
+    const isDark = typeof window !== 'undefined' && document.documentElement.classList.contains('dark');
+
     return (
         <>
             <ambientLight intensity={0.55} />
             <directionalLight position={[8, 15, 6]} intensity={2.2} />
             <directionalLight position={[-5, 8, -3]} intensity={0.5} />
             <group rotation={[-0.4, 0, 0]} position={[0, -1, 0]}>
-                <GridFloor onClick={handleClick} onHover={handleHover} />
+                <GridFloor onClick={handleClick} onHover={handleHover} themeState={themeState} />
                 <Simulation stasisCell={stasisCell} hoveredCell={hoveredCell} />
             </group>
-            <fog attach="fog" args={['#F5F2EE', 10, 40]} />
+            <fog attach="fog" args={[isDark ? '#111111' : '#F5F2EE', 10, 40]} />
         </>
     );
 }
@@ -537,7 +538,7 @@ export default function KineticGrid({ hideOverlay = false }) {
                     <p style={{
                         fontFamily: '"DM Mono", monospace', fontSize: '10px',
                         textTransform: 'uppercase', letterSpacing: '0.15em',
-                        color: '#0A0A0A', lineHeight: '2',
+                        color: 'var(--text)', lineHeight: '2',
                     }}>
                         Sys.Status: [ NOMINAL ]<br />
                         Algorithm: [ PIBT ]<br />
