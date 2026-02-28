@@ -26,6 +26,7 @@
     "three": "^0.183.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2"
+    "@playwright/test": "^1.58.2",
+    "astro-pagefind": "^1.8.5"
   }
 }

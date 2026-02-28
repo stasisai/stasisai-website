@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import KineticGrid from '../components/KineticGrid.jsx';
+---
+
+<Layout title="404 | Agent Lost">
+  <Header />
+
+  <main class="error-page snap-container">
+    <div class="hero-canvas-wrapper glitch-effect">
+      <KineticGrid client:only="react" />
+    </div>
+    
+    <div class="hero-gradient error-gradient"></div>
+
+    <div class="error-content">
+      <p class="error-code">[Error 404]</p>
+      <h1 class="error-title">Simulation Crash</h1>
+      <p class="error-message">
+        Agent lost in the spatial grid. The coordinates you requested do not exist in current memory banks.
+      </p>
+      
+      <div class="hero-cta">
+        <a href="/" class="btn-primary">Restart Simulation</a>
+        <a href="/docs" class="btn-ghost">Read Manual</a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .error-page {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-canvas-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  /* Make the canvas look a bit chaotic for the 404 */
+  .glitch-effect {
+    filter: hue-rotate(140deg) saturate(2) contrast(1.2);
+    opacity: 0.6;
+  }
+
+  .error-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: radial-gradient(circle at center, transparent 0%, var(--bg) 70%);
+  }
+
+  .error-content {
+    position: relative;
+    z-index: 20;
+    text-align: center;
+    max-width: 600px;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .error-code {
+    font-family: var(--mono);
+    color: var(--red);
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+    margin: 0;
+  }
+
+  .error-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: var(--dark);
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -2px;
+  }
+
+  .error-message {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    color: var(--text-sec);
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: #fff;
+    border: 1px solid var(--red);
+  }
+  .btn-primary:hover {
+    background: #7f1414;
+  }
+</style>

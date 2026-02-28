@@ -1,14 +1,16 @@
 ---
 import Layout from './Layout.astro';
 import Header from '../components/Header.astro';
+import Search from "astro-pagefind/components/Search";
 
 interface Props {
   title: string;
   description?: string;
   currentSlug?: string;
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { title, description, currentSlug } = Astro.props;
+const { title, description, currentSlug, headings = [] } = Astro.props;
 
 const navGroups = [
   {
@@ -62,9 +64,21 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   <Header />
 
   <div class="docs-container wrapper-grid">
-    <!-- Desktop Sidebar -->
-    <aside class="docs-sidebar">
+    <!-- Mobile Topbar for Docs Menu -->
+    <div class="docs-mobile-topbar hidden-desktop">
+      <button class="docs-menu-btn" id="docs-menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        Chapters
+      </button>
+    </div>
+
+    <!-- Desktop/Mobile Sidebar -->
+    <aside class="docs-sidebar" id="docs-sidebar">
       <div class="sidebar-inner">
+        <div class="search-wrapper">
+          <Search id="search" className="pagefind-ui" uiOptions={{ showImages: false }} />
+        </div>
+        
         {navGroups.map(group => {
           // Auto-expand the category if one of its items is the current page
           const hasActive = group.items.some(item => currentSlug === item.slug);
@@ -121,19 +135,28 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
         </nav>
       </article>
     </main>
+
+    <!-- Right Sidebar (Table of Contents) -->
+    {headings.length > 0 && (
+      <aside class="docs-toc">
+        <div class="toc-inner">
+          <span class="toc-title">On this page</span>
+          <ul class="toc-list">
+            {headings.filter(h => h.depth <= 3).map(heading => (
+              <li class={`toc-item depth-${heading.depth}`}>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    )}
   </div>
 </Layout>
 
 <script is:inline>
-  // Setup sidebar state persistence with view transitions
-  document.addEventListener('astro:before-swap', () => {
-    const details = document.querySelectorAll('details.sidebar-group');
-    const state = Array.from(details).map(d => d.open);
-    sessionStorage.setItem('sidebarState', JSON.stringify(state));
-  });
-
-  document.addEventListener('astro:page-load', () => {
-    // Restore <details> state if user interacted
+  const initDocsUX = () => {
+    // 1. Restore <details> state
     const stateStr = sessionStorage.getItem('sidebarState');
     if (stateStr) {
       try {
@@ -146,7 +169,61 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
         });
       } catch(e) {}
     }
+
+    // 2. Mobile Menu Toggle
+    const menuBtn = document.getElementById('docs-menu-btn');
+    const sidebar = document.getElementById('docs-sidebar');
+    if (menuBtn && sidebar) {
+      menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+      // Close when clicking a link on mobile
+      const links = sidebar.querySelectorAll('.sidebar-link');
+      links.forEach(l => l.addEventListener('click', () => {
+        if(window.innerWidth < 768) {
+          sidebar.classList.remove('open');
+        }
+      }));
+    }
+
+    // 3. Inject Copy Buttons in Code Blocks
+    const codeBlocks = document.querySelectorAll('.astro-code');
+    codeBlocks.forEach(block => {
+      // Avoid adding multiple buttons
+      if(block.querySelector('.copy-btn')) return;
+      
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+      btn.title = "Copy code";
+      
+      btn.addEventListener('click', async () => {
+        const code = block.querySelector('code');
+        if (code) {
+          await navigator.clipboard.writeText(code.innerText);
+          btn.classList.add('copied');
+          setTimeout(() => btn.classList.remove('copied'), 2000);
+        }
+      });
+      
+      block.appendChild(btn);
+    });
+  };
+
+  // Setup sidebar state persistence with view transitions
+  document.addEventListener('astro:before-swap', () => {
+    const details = document.querySelectorAll('details.sidebar-group');
+    const state = Array.from(details).map(d => d.open);
+    sessionStorage.setItem('sidebarState', JSON.stringify(state));
   });
+
+  document.addEventListener('astro:page-load', initDocsUX);
+  
+  if (document.readyState === 'complete') {
+      initDocsUX();
+  } else {
+      document.addEventListener('DOMContentLoaded', initDocsUX);
+  }
 </script>
 
 <style>
@@ -166,6 +243,35 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     padding-top: 60px; /* Aligned with header height to remove dead space */
   }
 
+  /* ─── Mobile Docs Topbar ─── */
+  .docs-mobile-topbar {
+    display: none;
+    padding: 12px 24px;
+    background: rgba(245,242,238,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    position: sticky;
+    top: 60px; /* Below main header */
+    z-index: 90;
+  }
+  .docs-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    color: var(--dark);
+  }
+  @media (max-width: 767px) {
+    .docs-mobile-topbar { display: flex; }
+    .docs-container { display: flex; flex-direction: column; }
+  }
+
   /* ─── Sidebar ─── */
   .docs-sidebar {
     width: 280px;
@@ -173,18 +279,61 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     border-right: 1px solid rgba(0,0,0,0.06);
     background-color: rgba(240,237,233, 0.85); /* Slightly transparent to let grid show */
     backdrop-filter: blur(10px);
-    display: none;
+    
+    /* Default offcanvas for mobile */
+    position: fixed;
+    top: 108px; /* 60px header + 48px topbar */
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
   }
+  .docs-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0,0,0,0.05);
+  }
+
   @media (min-width: 768px) {
-    .docs-sidebar { display: block; }
+    .docs-sidebar {
+      position: relative;
+      top: 0;
+      transform: translateX(0);
+      width: 220px; /* Slim on tablet */
+      display: block;
+    }
+    .hidden-desktop { display: none; }
+    .docs-container { border-top: 1px solid transparent; } /* Realign flex row */
+  }
+  @media (min-width: 1024px) {
+    .docs-sidebar { width: 280px; }
   }
 
   .sidebar-inner {
-    padding: 32px;
+    padding: 32px 24px;
     position: sticky;
     top: 60px;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
+  }
+  
+  .search-wrapper {
+    margin-bottom: 24px;
+  }
+  
+  /* Custom PageFind styles to match theme */
+  :global(.pagefind-ui) {
+    --pagefind-ui-scale: 0.8 !important;
+    --pagefind-ui-primary: var(--dark) !important;
+    --pagefind-ui-text: var(--text) !important;
+    --pagefind-ui-background: var(--bg) !important;
+    --pagefind-ui-border: rgba(128,128,128,0.2) !important;
+    --pagefind-ui-border-width: 1px !important;
+    --pagefind-ui-border-radius: 6px !important;
+    --pagefind-ui-font: var(--sans) !important;
+  }
+  :global(.pagefind-ui .pagefind-ui__search-input) {
+    font-weight: 400 !important;
   }
 
   .sidebar-group {
@@ -276,6 +425,9 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   }
 
   @media (min-width: 768px) {
+    .docs-main { padding: 48px 40px; }
+  }
+  @media (min-width: 1024px) {
     .docs-main { padding: 48px 80px; }
   }
 
@@ -336,7 +488,7 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   .prose-container :global(p) {
     font-family: var(--sans);
     font-size: 1rem;
-    color: #2A2A2A;
+    color: var(--text);
     line-height: 1.8;
     margin-bottom: 24px;
   }
@@ -346,7 +498,7 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     margin-bottom: 24px;
     font-family: var(--sans);
     line-height: 1.7;
-    color: #2A2A2A;
+    color: var(--text);
   }
   
   .prose-container :global(li) {
@@ -387,6 +539,31 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     line-height: 1.5;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+  }
+  
+  .prose-container :global(.copy-btn) {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    color: #a0a0a0;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .prose-container :global(.copy-btn:hover) {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+  .prose-container :global(.copy-btn.copied) {
+    color: var(--green);
+    border-color: var(--green);
   }
 
   /* Inline code snippets */
@@ -456,6 +633,62 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     font-family: var(--serif);
     font-size: 1.25rem;
     color: var(--dark);
+  }
+
+  /* ─── Right Sidebar Table of Contents ─── */
+  .docs-toc {
+    width: 200px;
+    flex-shrink: 0;
+    display: none; /* hidden on mobile/tablet */
+    padding: 48px 24px 48px 0;
+  }
+  @media (min-width: 1100px) {
+    .docs-toc { display: block; }
+  }
+  
+  .toc-inner {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+  
+  .toc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: block;
+  }
+  
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .toc-item a {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--text-sec);
+    text-decoration: none;
+    transition: color 0.2s;
+    line-height: 1.4;
+    display: block;
+  }
+  
+  .toc-item a:hover {
+    color: var(--dark);
+  }
+  
+  .toc-item.depth-3 {
+    padding-left: 12px;
   }
 </style>
 

@@ -7,8 +7,9 @@
   --color-brand-text: #0A0A0A;
   --color-brand-text-secondary: #707070;
   --color-brand-text-dark: #F0EDE9;
-  
-  --color-brand-accent-emerald: #047857; /* Variant 4 */
+
+  --color-brand-accent-emerald: #047857;
+  /* Variant 4 */
   --color-brand-accent-red: #991B1B;
 
   --font-serif: "Playfair Display", serif;
@@ -18,8 +19,8 @@
 
 @layer base {
   body {
-    background-color: var(--color-brand-bg);
-    color: var(--color-brand-text);
+    background-color: var(--bg);
+    color: var(--text);
   }
 }
 
@@ -43,7 +44,8 @@
 
 .btn-ghost {
   display: inline-block;
-  border: 1px solid rgba(0,0,0,0.08); /* 0,0,0,0.08 is the separator standard */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  /* 0,0,0,0.08 is the separator standard */
   background: transparent;
   color: var(--color-brand-text);
   font-family: var(--font-mono);

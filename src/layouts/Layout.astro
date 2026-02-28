@@ -68,4 +68,39 @@ const {
     --mono: 'DM Mono', monospace;
     --sans: 'Inter', sans-serif;
   }
+
+  html.dark {
+    --bg: #0c0c0c;
+    --surface: #141414;
+    --dark: #F5F2EE;
+    --text: #e0e0e0;
+    --text-sec: #888888;
+    --text-dark: #080808;
+    --red: #e63946;
+    --green: #059669;
+  }
 </style>
+
+<script is:inline>
+  const setDarkMode = () => {
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+  
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    window.localStorage.setItem('theme', theme);
+  };
+  
+  setDarkMode();
+  document.addEventListener('astro:after-swap', setDarkMode);
+</script>
