@@ -262,7 +262,10 @@ import KineticGrid from '../components/KineticGrid.jsx';
     /* ─── Snap Container ───────────────────────────────────── */
     .snap-container {
       height: 100vh;
+      height: 100dvh;
+      width: 100vw;
       overflow-y: scroll;
+      overflow-x: hidden;
       scroll-snap-type: y mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
@@ -665,11 +668,11 @@ import KineticGrid from '../components/KineticGrid.jsx';
 
     @media (max-width: 600px) {
       .hero-canvas-wrapper { display: none; }
-      .hero-content { padding: 0 20px; height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+      .hero-content { padding: 0 20px; height: 100vh; height: 100dvh; display: flex; flex-direction: column; justify-content: center; }
       .hero-title { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.05; }
       
       /* Make dark section single viewport */
-      .dark-section { min-height: 100vh; display: flex; align-items: center; padding: 0; }
+      .dark-section { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding: 0; background-color: var(--dark); }
       
       /* Features section allowed to scroll to respect rich content height */
       .features-section { min-height: auto; padding: 64px 0; display: block; }

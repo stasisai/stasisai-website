@@ -75,7 +75,7 @@
   .burger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   .mobile-menu {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
     background: linear-gradient(135deg, rgba(245,242,238,0.98), rgba(240,237,233,0.98));
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     z-index: 150; display: flex; flex-direction: column; justify-content: center;
@@ -123,5 +123,27 @@
         });
       });
     }
+
+    // Intercept logo clicks on the homepage to smooth scroll instead of reload
+    const logoLink = document.querySelector('.header-brand');
+    logoLink?.addEventListener('click', (e) => {
+      const path = window.location.pathname;
+      if (path === '/' || path === '/index.html') {
+        e.preventDefault();
+        const snapContainer = document.querySelector('.snap-container');
+        if (snapContainer) {
+          snapContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // Auto-close menu if open
+        if (burgerBtn?.classList.contains('open')) {
+          burgerBtn.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          document.body.style.overflowY = 'auto';
+        }
+      }
+    });
+
   });
 </script>
