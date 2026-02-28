@@ -9,7 +9,7 @@ In MAFIS, `src/solver/astar.rs` implements a time-space A* pathfinder. It is res
 
 ## Time-Space Pathfinding
 
-Unlike standard 2D A* that only considers $X$ and $Y$ coordinates, MAPF requires pathfinding in 3 Dimensions: $X$, $Y$, and $Time$ (Ticks).
+Unlike standard 2D A* that only considers `X` and `Y` coordinates, MAPF requires pathfinding in 3 Dimensions: `X`, `Y`, and `Time` (Ticks).
 
 This ensures an agent doesn't just ask "can I move here?", but "can I move here *at tick T*?".
 

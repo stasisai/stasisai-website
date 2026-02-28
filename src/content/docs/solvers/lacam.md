@@ -1,9 +1,9 @@
 ---
-title: LaCAM (Lazy CBS)
-description: A hybrid approach balancing optimality and scalability.
+title: LaCAM (Lazy Constraints Addition Search)
+description: A hybrid approach balancing optimality and scalability based on Lazy Constraints Addition Search for MAPF.
 ---
 
-**LaCAM (Lazy CBS)** is natively supported in `src/solver/lacam.rs` as a middle-ground algorithmic approach.
+**LaCAM (Lazy Constraints Addition Search for MAPF)** is natively supported in `src/solver/lacam.rs` as a middle-ground algorithmic approach.
 
 ## The Theory
 
