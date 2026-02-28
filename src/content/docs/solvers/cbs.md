@@ -13,7 +13,7 @@ At the high level, CBS uses a Constraint Tree (CT). Each node in the CT contains
 
 If the paths have no conflicts (e.g., two agents occupying the same vertex at the same time), the node represents a valid solution. If a conflict occurs, the algorithm splits the node into two child nodes, adding a new constraint to each to prevent the conflict.
 
-Inside Stasis AI, the Constraint Tree components currently look like this in Rust:
+Inside MAFIS, the Constraint Tree components currently look like this in Rust:
 
 ```rust
 #[derive(Debug, Clone)]

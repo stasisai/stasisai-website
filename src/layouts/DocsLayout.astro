@@ -51,6 +51,12 @@ const navGroups = [
     ]
   }
 ];
+
+const flatItems = navGroups.flatMap(g => g.items);
+const currentIndex = flatItems.findIndex(i => i.slug === currentSlug);
+
+const prevPage = currentIndex > 0 ? flatItems[currentIndex - 1] : null;
+const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? flatItems[currentIndex + 1] : null;
 ---
 
 <Layout title={`${title} | MAFIS Docs`}>
@@ -97,10 +103,52 @@ const navGroups = [
         {description && <p class="lead-desc">{description}</p>}
         <!-- Markdown injected here -->
         <slot />
+        
+        <!-- Pagination -->
+        <nav class="docs-pagination">
+          {prevPage ? (
+            <a href={`/docs/${prevPage.slug}`} class="page-nav prev">
+              <span class="nav-dir">← Previous</span>
+              <span class="nav-label">{prevPage.label}</span>
+            </a>
+          ) : <div></div>}
+          
+          {nextPage ? (
+            <a href={`/docs/${nextPage.slug}`} class="page-nav next">
+              <span class="nav-dir">Next →</span>
+              <span class="nav-label">{nextPage.label}</span>
+            </a>
+          ) : <div></div>}
+        </nav>
       </article>
     </main>
   </div>
 </Layout>
+
+<script is:inline>
+  // Setup sidebar state persistence with view transitions
+  document.addEventListener('astro:before-swap', () => {
+    const details = document.querySelectorAll('details.sidebar-group');
+    const state = Array.from(details).map(d => d.open);
+    sessionStorage.setItem('sidebarState', JSON.stringify(state));
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    // Restore <details> state if user interacted
+    const stateStr = sessionStorage.getItem('sidebarState');
+    if (stateStr) {
+      try {
+        const state = JSON.parse(stateStr);
+        const details = document.querySelectorAll('details.sidebar-group');
+        details.forEach((d, i) => {
+          if (state[i] !== undefined) {
+             d.open = state[i];
+          }
+        });
+      } catch(e) {}
+    }
+  });
+</script>
 
 <style>
   /* Subtle Grid Pattern */
@@ -171,10 +219,11 @@ const navGroups = [
   }
 
   .chevron {
+    transform: rotate(-90deg);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   details[open] .chevron {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
   }
 
   .group-list {
@@ -356,6 +405,58 @@ const navGroups = [
     color: inherit;
     padding: 0;
     border-radius: 0;
+  }
+
+  /* ─── Pagination ─── */
+  .docs-pagination {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  
+  .page-nav {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    padding: 16px 24px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    background: var(--surface);
+    transition: all 0.2s ease;
+    flex: 1;
+  }
+  
+  .page-nav.prev {
+    align-items: flex-start;
+  }
+  
+  .page-nav.next {
+    align-items: flex-end;
+    text-align: right;
+  }
+  
+  .page-nav:hover {
+    border-color: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.02);
+    transform: translateY(-2px);
+  }
+  
+  .nav-dir {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-sec);
+    margin-bottom: 8px;
+  }
+  
+  .nav-label {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    color: var(--dark);
   }
 </style>
 
