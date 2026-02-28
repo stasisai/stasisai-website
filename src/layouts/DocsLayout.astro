@@ -231,8 +231,8 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   .wrapper-grid {
     background-color: var(--bg);
     background-image: 
-      linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(128,128,128,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(128,128,128,0.03) 1px, transparent 1px);
     background-size: 40px 40px;
     background-position: center top;
   }
@@ -276,8 +276,8 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   .docs-sidebar {
     width: 280px;
     flex-shrink: 0;
-    border-right: 1px solid rgba(0,0,0,0.06);
-    background-color: rgba(240,237,233, 0.85); /* Slightly transparent to let grid show */
+    border-right: 1px solid rgba(128,128,128,0.06);
+    background-color: var(--surface); /* Slightly transparent to let grid show */
     backdrop-filter: blur(10px);
     
     /* Default offcanvas for mobile */
@@ -319,11 +319,12 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   
   .search-wrapper {
     margin-bottom: 24px;
+    line-height: 1; /* Avoids strange vertical rhythm stacking on astro pagefind component */
   }
   
   /* Custom PageFind styles to match theme */
   :global(.pagefind-ui) {
-    --pagefind-ui-scale: 0.8 !important;
+    --pagefind-ui-scale: 0.65 !important; /* Made smaller */
     --pagefind-ui-primary: var(--dark) !important;
     --pagefind-ui-text: var(--text) !important;
     --pagefind-ui-background: var(--bg) !important;
@@ -359,7 +360,7 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(0,0,0,0.04);
+    border-bottom: 1px solid rgba(128,128,128,0.04);
     transition: color 0.2s;
   }
   .group-title:hover {
@@ -587,7 +588,7 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
   .docs-pagination {
     margin-top: 64px;
     padding-top: 32px;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(128,128,128,0.1);
     display: flex;
     justify-content: space-between;
     gap: 24px;
@@ -598,7 +599,7 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     flex-direction: column;
     text-decoration: none;
     padding: 16px 24px;
-    border: 1px solid rgba(0,0,0,0.08);
+    border: 1px solid rgba(128,128,128,0.08);
     border-radius: 8px;
     background: var(--surface);
     transition: all 0.2s ease;

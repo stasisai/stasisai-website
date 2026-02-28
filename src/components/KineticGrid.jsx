@@ -404,7 +404,7 @@ function Simulation({ stasisCell, hoveredCell }) {
             {/* Hover */}
             <mesh ref={hoverMeshRef} visible={false} rotation={[-Math.PI / 2, 0, 0]}>
                 <planeGeometry args={[0.92, 0.92]} />
-                <meshBasicMaterial color="#0A0A0A" transparent opacity={0.12} />
+                <meshBasicMaterial color="#707070" transparent opacity={0.3} />
             </mesh>
         </>
     );
@@ -416,21 +416,43 @@ function InfiniteGrid() {
         const SIZE = 60;
         const positions = [];
         const colors = [];
-        const center = new THREE.Color('#DFDBD6');
-        const edge = new THREE.Color('#F5F2EE');
+
+        // Define colors for light and dark modes
+        const lightCenter = new THREE.Color('#DFDBD6');
+        const lightEdge = new THREE.Color('#F5F2EE');
+
+        // Check if dark mode is active on initial load
+        const isDark = typeof window !== 'undefined' && document.documentElement.classList.contains('dark');
+        const centerCol = isDark ? new THREE.Color('#222222') : lightCenter;
+        const edgeCol = isDark ? new THREE.Color('#111111') : lightEdge;
+
         for (let x = -SIZE; x <= SIZE; x++) {
             const d = Math.abs(x) / SIZE;
-            const c = center.clone().lerp(edge, d * d);
+            const c = centerCol.clone().lerp(edgeCol, d * d);
             positions.push(x, 0, -SIZE, x, 0, SIZE);
             colors.push(c.r, c.g, c.b, c.r, c.g, c.b);
         }
         for (let z = -SIZE; z <= SIZE; z++) {
             const d = Math.abs(z) / SIZE;
-            const c = center.clone().lerp(edge, d * d);
+            const c = centerCol.clone().lerp(edgeCol, d * d);
             positions.push(-SIZE, 0, z, SIZE, 0, z);
             colors.push(c.r, c.g, c.b, c.r, c.g, c.b);
         }
         return { positions: new Float32Array(positions), colors: new Float32Array(colors) };
+    }, []);
+
+    // Effect to force re-render when theme changes using a mutation observer on html class
+    const [, setThemeState] = useState(0);
+    useEffect(() => {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    setThemeState(prev => prev + 1);
+                }
+            })
+        });
+        observer.observe(document.documentElement, { attributes: true });
+        return () => observer.disconnect();
     }, []);
 
     return (
@@ -439,7 +461,7 @@ function InfiniteGrid() {
                 <bufferAttribute attach="attributes-position" args={[gridLines.positions, 3]} />
                 <bufferAttribute attach="attributes-color" args={[gridLines.colors, 3]} />
             </bufferGeometry>
-            <lineBasicMaterial vertexColors transparent />
+            <lineBasicMaterial vertexColors transparent opacity={0.6} />
         </lineSegments>
     );
 }
