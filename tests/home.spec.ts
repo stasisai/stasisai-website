@@ -3,16 +3,16 @@ import { test, expect } from '@playwright/test';
 // Following TDD and Browser Automation rules 
 // (User-Facing Locator Pattern, Auto-Wait Pattern, Test Isolation Pattern)
 
-test.describe('Stasis AI Homepage', () => {
+test.describe('MAFIS Homepage', () => {
     test('should have the correct title and SEO metadata', async ({ page }) => {
         await page.goto('/');
 
         // Check title (Title is the first thing that matters for SEO and user expectation)
-        await expect(page).toHaveTitle(/Stasis AI.*MAPF/);
+        await expect(page).toHaveTitle(/MAFIS.*MAPF/);
 
         // Verify meta description
         const metaDescription = page.locator('meta[name="description"]');
-        await expect(metaDescription).toHaveAttribute('content', /MAPF/);
+        await expect(metaDescription).toHaveAttribute('content', /MAFIS/);
     });
 
     test('hero section should display main calls to action', async ({ page }) => {

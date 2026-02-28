@@ -1,6 +1,6 @@
 ---
 title: Conflict-Based Search (CBS)
-description: Technical overview of the CBS algorithm implementation in Stasis AI.
+description: Technical overview of the CBS algorithm implementation in MAFIS.
 ---
 
 **Conflict-Based Search (CBS)** is an optimal, two-level algorithm for Multi-Agent Path Finding (MAPF).
