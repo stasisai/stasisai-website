@@ -44,5 +44,5 @@ struct CtNode {
 ## Low-Level Search
 At the low level, CBS uses an algorithm like A* to find the optimal path for an individual agent given a specific set of constraints inherited from the high-level node.
 
-## Stasis AI Implementation Notes
-In Stasis AI, our Rust CBS implementation is heavily optimized for cache locality using Bevy's ECS. We utilize binary heaps for the Open List and carefully manage memory allocations during the Constraint Tree expansion to avoid out-of-memory errors in WebAssembly limits.
+## MAFIS Implementation Notes
+In MAFIS, our Rust CBS implementation is heavily optimized for cache locality using Bevy's ECS. We utilize binary heaps for the Open List and carefully manage memory allocations during the Constraint Tree expansion to avoid out-of-memory errors in WebAssembly limits.
