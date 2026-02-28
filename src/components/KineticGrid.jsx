@@ -3,8 +3,8 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 // ─── Constants ──────────────────────────────────────────────────────
-const GRID_W = 12;
-const GRID_H = 10;
+const GRID_W = 16;
+const GRID_H = 14;
 const NUM_AGENTS = 8;
 const TICK_INTERVAL = 0.45;
 const CELL_SIZE = 1.0;
@@ -124,7 +124,37 @@ function WaveCell({ x, z, birthTime, clock }) {
     return (
         <mesh ref={meshRef} position={[x, 0.015, z]} visible={false}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshBasicMaterial ref={matRef} color="#991B1B" transparent opacity={0} side={THREE.DoubleSide} />
+            <meshBasicMaterial ref={matRef} color="#ff3333" transparent opacity={0} side={THREE.DoubleSide} blending={THREE.AdditiveBlending} />
+        </mesh>
+    );
+}
+
+
+
+// ─── Mega Shockwave Ring ────────────────────────────────────────────
+function ShockwaveRing({ x, z, birthTime, clockRef }) {
+    const meshRef = useRef();
+    const matRef = useRef();
+
+    useFrame(() => {
+        if (!meshRef.current || !matRef.current) return;
+        const age = clockRef.current - birthTime;
+        if (age < 0 || age > RING_LIFETIME * 2.5) {
+            meshRef.current.visible = false;
+            return;
+        }
+        meshRef.current.visible = true;
+        const norm = age / (RING_LIFETIME * 2.5);
+        // Quartic out expansion
+        const scale = 1 + (1 - Math.pow(1 - norm, 4)) * 18;
+        meshRef.current.scale.set(scale, scale, scale);
+        matRef.current.opacity = (1 - norm) * 0.9;
+    });
+
+    return (
+        <mesh ref={meshRef} position={[x, 0.05, z]} rotation={[Math.PI / 2, 0, 0]} visible={false}>
+            <torusGeometry args={[0.6, 0.03, 16, 100]} />
+            <meshBasicMaterial ref={matRef} color="#ff2222" transparent opacity={0} blending={THREE.AdditiveBlending} />
         </mesh>
     );
 }
@@ -145,6 +175,8 @@ function Simulation({ stasisCell, hoveredCell }) {
     const waveRadius = useRef(0);
     const clockRef = useRef(0);
     const hasFaulted = useRef(false);
+    const faultTimeRef = useRef(-1);
+    const faultPointRef = useRef(null);
 
     const offsetX = -(GRID_W - 1) / 2;
     const offsetZ = -(GRID_H - 1) / 2;
@@ -183,6 +215,9 @@ function Simulation({ stasisCell, hoveredCell }) {
             const seedKey = `${stasisCell.x},${stasisCell.y}`;
             const seedWorldX = (stasisCell.x + offsetX) * CELL_SIZE;
             const seedWorldZ = (stasisCell.y + offsetZ) * CELL_SIZE;
+
+            faultTimeRef.current = clockRef.current;
+            faultPointRef.current = { x: seedWorldX, z: seedWorldZ };
 
             waveFront.current.add(seedKey);
             waveProcessed.current.add(seedKey);
@@ -295,8 +330,8 @@ function Simulation({ stasisCell, hoveredCell }) {
             // If faulted: freeze at exactly the visual position they reached
             if (agent.isFaulted) {
                 if (agent.frozenVisual === undefined) {
-                    const t = agent.lerpT;
-                    const ease = t * t * (3 - 2 * t);
+                    const t = Math.min(agent.lerpT, 1);
+                    const ease = 1 - Math.pow(1 - t, 4);
                     const vx = agent.prevX + (agent.cx - agent.prevX) * ease;
                     const vy = agent.prevY + (agent.cy - agent.prevY) * ease;
                     agent.frozenVisual = { x: vx, y: vy };
@@ -316,7 +351,7 @@ function Simulation({ stasisCell, hoveredCell }) {
                 agent.lerpT = Math.min(1, agent.lerpT + (delta / TICK_INTERVAL));
             }
             const t = agent.lerpT;
-            const ease = t * t * (3 - 2 * t);
+            const ease = 1 - Math.pow(1 - t, 4);
             const vx = agent.prevX + (agent.cx - agent.prevX) * ease;
             const vy = agent.prevY + (agent.cy - agent.prevY) * ease;
             ref.position.set((vx + offsetX) * CELL_SIZE, 0, (vy + offsetZ) * CELL_SIZE);
@@ -344,12 +379,22 @@ function Simulation({ stasisCell, hoveredCell }) {
     });
 
     const robotModel = useMemo(() => makeRobotModel(), []);
+    const robotClones = useMemo(() => sim.agents.map(() => robotModel.clone()), [sim.agents, robotModel]);
 
     return (
         <>
-            {sim.agents.map((_, i) => (
-                <primitive key={i} object={robotModel.clone()} ref={(el) => { robotRefs.current[i] = el; }} />
+            {sim.agents.map((a, i) => (
+                <primitive key={i} object={robotClones[i]} ref={(el) => { robotRefs.current[i] = el; }} />
             ))}
+
+            {hasFaulted.current && faultPointRef.current && (
+                <ShockwaveRing
+                    x={faultPointRef.current.x}
+                    z={faultPointRef.current.z}
+                    birthTime={faultTimeRef.current}
+                    clockRef={clockRef}
+                />
+            )}
 
             {/* Wave ring cells — individual meshes, NOT instancedMesh */}
             {waveCellList.map((cell) => (
@@ -359,7 +404,7 @@ function Simulation({ stasisCell, hoveredCell }) {
             {/* Hover */}
             <mesh ref={hoverMeshRef} visible={false} rotation={[-Math.PI / 2, 0, 0]}>
                 <planeGeometry args={[0.92, 0.92]} />
-                <meshBasicMaterial color="#0A0A0A" transparent opacity={0.07} />
+                <meshBasicMaterial color="#0A0A0A" transparent opacity={0.12} />
             </mesh>
         </>
     );
@@ -414,12 +459,18 @@ function GridFloor({ onClick, onHover }) {
                     e.stopPropagation();
                     const px = Math.round(e.point.x - offsetX);
                     const pz = Math.round(e.point.z - offsetZ);
-                    onClick({ x: px, y: pz });
+                    if (px >= 0 && px < GRID_W && pz >= 0 && pz < GRID_H) {
+                        onClick({ x: px, y: pz });
+                    }
                 }}
                 onPointerMove={(e) => {
                     const px = Math.round(e.point.x - offsetX);
                     const pz = Math.round(e.point.z - offsetZ);
-                    onHover({ x: px, y: pz });
+                    if (px >= 0 && px < GRID_W && pz >= 0 && pz < GRID_H) {
+                        onHover({ x: px, y: pz });
+                    } else {
+                        onHover(null);
+                    }
                 }}
                 onPointerLeave={() => onHover(null)}
             >
