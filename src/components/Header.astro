@@ -3,7 +3,8 @@
 <header class="site-header" id="main-header">
   <div class="header-inner">
     <a href="/" class="header-brand">
-      <img src="/logo-stasis-grey.svg" alt="Stasis AI" class="header-logo" />
+      <img src="/logo-stasis-grey.svg" alt="Stasis AI" class="header-logo logo-light" />
+      <img src="/logo-stasis-white.svg" alt="Stasis AI" class="header-logo logo-dark" />
       <span class="header-name">Stasis</span>
     </a>
     <nav class="header-nav hidden-mobile">
@@ -60,6 +61,10 @@
 
   .header-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .header-logo { height: 28px; width: auto; }
+  .logo-dark { display: none; }
+  :global(html.dark) .logo-light { display: none; }
+  :global(html.dark) .logo-dark { display: block; }
+
   .header-name {
     font-family: var(--mono); font-weight: 500;
     letter-spacing: 0.08em; color: var(--dark);
@@ -135,14 +140,18 @@
   }
 </style>
 
-<script is:inline>
-  const initHeader = () => {
+<script>
+  document.addEventListener('astro:page-load', () => {
     const burgerBtn = document.getElementById('burger-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const themeToggle = document.getElementById('theme-toggle');
 
     if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
+      // Remove old listener to avoid duplicates on view transitions
+      const newToggle = themeToggle.cloneNode(true);
+      themeToggle.parentNode.replaceChild(newToggle, themeToggle);
+      
+      newToggle.addEventListener('click', () => {
         const isDark = document.documentElement.classList.contains('dark');
         const nextTheme = isDark ? 'light' : 'dark';
         document.documentElement.classList.toggle('dark');
@@ -151,8 +160,12 @@
     }
 
     if (burgerBtn && mobileMenu) {
-      burgerBtn.addEventListener('click', () => {
-        burgerBtn.classList.toggle('open');
+      // Remove old listener
+      const newBurger = burgerBtn.cloneNode(true);
+      burgerBtn.parentNode.replaceChild(newBurger, burgerBtn);
+      
+      newBurger.addEventListener('click', () => {
+        newBurger.classList.toggle('open');
         mobileMenu.classList.toggle('open');
         document.body.style.overflowY = mobileMenu.classList.contains('open') ? 'hidden' : 'auto';
       });
@@ -160,18 +173,11 @@
       const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
       mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
-          burgerBtn.classList.remove('open');
+          newBurger.classList.remove('open');
           mobileMenu.classList.remove('open');
           document.body.style.overflowY = 'auto';
         });
       });
     }
-  };
-
-  document.addEventListener('astro:page-load', initHeader);
-  if (document.readyState === 'complete') {
-    initHeader();
-  } else {
-    document.addEventListener('DOMContentLoaded', initHeader);
-  }
+  });
 </script>

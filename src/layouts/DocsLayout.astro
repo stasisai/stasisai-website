@@ -333,8 +333,17 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     --pagefind-ui-border-radius: 6px !important;
     --pagefind-ui-font: var(--sans) !important;
   }
+  
   :global(.pagefind-ui .pagefind-ui__search-input) {
     font-weight: 400 !important;
+  }
+  :global(.pagefind-ui .pagefind-ui__result-title) {
+    font-family: var(--serif) !important;
+    font-size: 1.5em !important;
+    font-weight: 400 !important;
+  }
+  :global(.pagefind-ui .pagefind-ui__result-excerpt) {
+    font-family: var(--sans) !important;
   }
 
   .sidebar-group {
@@ -576,12 +585,19 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     border-radius: 4px;
     font-size: 0.85em;
   }
+  :global(html.dark) .prose-container :global(code) {
+    background: #ffffff12;
+    color: #ff6b6b;
+  }
 
   .prose-container :global(pre code) {
     background: transparent;
     color: inherit;
     padding: 0;
     border-radius: 0;
+  }
+  :global(html.dark) .prose-container :global(pre code) {
+    background: transparent;
   }
 
   /* ─── Pagination ─── */

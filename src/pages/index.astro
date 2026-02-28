@@ -500,8 +500,11 @@ import KineticGrid from '../components/KineticGrid.jsx';
     }
     .pillar-icon { 
       height: 64px; width: 64px; border-radius: 16px; 
-      background: rgba(255,255,255,0.05); padding: 4px;
+      background: #FFFFFF; padding: 4px;
       object-fit: cover;
+    }
+    :global(html.dark) .pillar-icon {
+      background: rgba(255,255,255,0.05);
     }
     .pillar-content { flex: 1; min-width: 240px; padding-top: 4px; }
     .pillar-title {
