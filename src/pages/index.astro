@@ -229,8 +229,8 @@ import KineticGrid from '../components/KineticGrid.jsx';
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    // Astro inline script guaranteed to run in client
-    document.addEventListener("DOMContentLoaded", () => {
+    // Execute on initial load and after SPA view transitions
+    document.addEventListener("astro:page-load", () => {
       const container = document.querySelector('.snap-container');
       const header = document.getElementById('main-header');
       const backToTop = document.getElementById('back-to-top');
@@ -302,7 +302,10 @@ import KineticGrid from '../components/KineticGrid.jsx';
               observer.unobserve(statsSection);
             }
           });
-        }, { threshold: 0.5 });
+        }, { 
+          root: container,
+          threshold: 0.5 
+        });
         
         observer.observe(statsSection);
       }
