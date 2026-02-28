@@ -1,0 +1,268 @@
+---
+import Layout from './Layout.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  currentSlug?: string;
+}
+
+const { title, description, currentSlug } = Astro.props;
+
+const navGroups = [
+  {
+    title: 'Getting Started',
+    items: [
+      { label: 'Introduction', slug: 'getting-started/introduction' },
+      { label: 'Architecture', slug: 'getting-started/architecture' },
+      { label: 'Quick Start', slug: 'getting-started/quick-start' }
+    ]
+  },
+  {
+    title: 'Engine & ECS (Bevy)',
+    items: [
+      { label: 'Core ECS Design', slug: 'engine-ecs/core-design' },
+      { label: 'Agent Components', slug: 'engine-ecs/agent-components' },
+      { label: 'Grid Structures', slug: 'engine-ecs/grid-structures' }
+    ]
+  },
+  {
+    title: 'MAPF Solvers',
+    items: [
+      { label: 'CBS (Conflict-Based)', slug: 'solvers/cbs' },
+      { label: 'A* Space-Time', slug: 'solvers/astar-space-time' },
+      { label: 'PIBT', slug: 'solvers/pibt' }
+    ]
+  },
+  {
+    title: 'Fault Mechanics',
+    items: [
+      { label: 'Chaos Engineering', slug: 'fault-engine/chaos-engineering' },
+      { label: 'Crash Faults', slug: 'fault-engine/crash-faults' },
+      { label: 'Delay Faults', slug: 'fault-engine/delay-faults' }
+    ]
+  },
+  {
+    title: 'Scenarios',
+    items: [
+      { label: 'Scenario Loading', slug: 'scenarios/scenario-loading' },
+      { label: 'Replays', slug: 'scenarios/deterministic-replays' }
+    ]
+  }
+];
+---
+
+<Layout title={`${title} | MAFIS Docs`}>
+  <Header />
+
+  <div class="docs-container">
+    <!-- Desktop Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-inner">
+        {navGroups.map(group => (
+          <div class="sidebar-group">
+            <h4 class="group-title">{group.title}</h4>
+            <ul class="group-list">
+              {group.items.map(item => {
+                const isActive = currentSlug === item.slug;
+                return (
+                  <li>
+                    <a 
+                      href={`/docs/${item.slug}`} 
+                      class={`sidebar-link ${isActive ? 'active' : ''}`}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="docs-main">
+      <article class="prose-container">
+        <h1>{title}</h1>
+        {description && <p class="lead-desc">{description}</p>}
+        <!-- Markdown injected here -->
+        <slot />
+      </article>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .docs-container {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 80px; /* Offset for header */
+    background-color: var(--bg);
+  }
+
+  .docs-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    border-right: 1px solid rgba(0,0,0,0.06);
+    background-color: var(--surface);
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .docs-sidebar { display: block; }
+  }
+
+  .sidebar-inner {
+    padding: 40px 32px;
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .sidebar-group {
+    margin-bottom: 32px;
+  }
+
+  .group-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-sec);
+    margin-bottom: 12px;
+  }
+
+  .group-list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sidebar-link {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  
+  .sidebar-link:hover {
+    opacity: 1;
+    color: var(--dark);
+  }
+
+  .sidebar-link.active {
+    opacity: 1;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .sidebar-link.active::before {
+    content: "— ";
+    color: var(--text-sec);
+  }
+
+  .docs-main {
+    flex: 1;
+    padding: 40px 24px 80px;
+    min-width: 0; /* Prevents overflow */
+  }
+
+  @media (min-width: 768px) {
+    .docs-main { padding: 64px 80px; }
+  }
+
+  /* Custom Prose Styles for Markdown */
+  .prose-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  
+  .prose-container :global(h1) {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .lead-desc {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    color: var(--text-sec);
+    line-height: 1.6;
+    margin-bottom: 48px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 32px;
+  }
+
+  .prose-container :global(h2) {
+    font-family: var(--sans);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .prose-container :global(h3) {
+    font-family: var(--sans);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+
+  .prose-container :global(p) {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: #2A2A2A;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .prose-container :global(ul), .prose-container :global(ol) {
+    padding-left: 24px;
+    margin-bottom: 24px;
+    font-family: var(--sans);
+    line-height: 1.7;
+  }
+  
+  .prose-container :global(li) {
+    margin-bottom: 8px;
+  }
+
+  .prose-container :global(strong) {
+    font-weight: 600;
+  }
+
+  .prose-container :global(pre) {
+    background-color: var(--dark) !important;
+    color: var(--text-dark);
+    padding: 24px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 32px 0;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .prose-container :global(code) {
+    font-family: var(--mono);
+    background: rgba(0,0,0,0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .prose-container :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+</style>
