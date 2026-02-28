@@ -1,35 +1,36 @@
 ---
 title: MAFIS Architecture
-description: Overview of the MAFIS (Multi-Agent Fault Injection Simulator) technical stack.
+description: Overview of the Multi-Agent Fault Injection Simulator stack.
 ---
 
-MAFIS entirely relies on a modern, deeply optimized systems programming stack tailored to large-scale simulations.
+MAFIS natively relies on a modern, deeply optimized systems programming stack tailored to large-scale operations.
 
-## 1. Rust & Bevy Engine (The Core)
+## 1. Core State & Simulation Box
 
-The core logic, pathfinding algorithms, and spatial interactions are written in **Rust**.
-Rather than an object-oriented approach, we use **Bevy Engine’s Entity Component System (ECS)**. This provides phenomenal cache locality and parallel execution paths. By breaking our agents into fine-grained components, computing agent paths per tick remains entirely bound to minimal latency constraints.
+The core `src/core` module holds everything dictating space, time, and matter.
+It wraps the `Grid` (a matrix representing 2D nodes), `Action` enums (movements like North, South, Wait), and `LogicalAgent` configurations.
 
-Here is a glimpse of our fundamental agent component structure in the engine:
+The simulation runs tightly through isolated System Sets ensuring deterministic execution orders: Physics first, Faults second, Replanning third. 
 
-```rust
-use bevy::prelude::*;
-use std::collections::VecDeque;
+## 2. Solver Plugins
 
-#[derive(Component, Debug)]
-pub struct LogicalAgent {
-    pub current_pos: IVec2,
-    pub goal_pos: IVec2,
-    pub planned_path: VecDeque<Action>,
-}
-```
+Defined in `src/solver`, these are purely abstract blocks:
+* **`pibt.rs`**: Fast, reactive, default for thousands of nodes.
+* **`cbs.rs`**: Exhaustive, globally-optimal conflict tree.
+* **`lacam.rs`**: Lazy, hybrid approach.
+* **`astar.rs`**: Universal primitive line-finding.
 
-## 2. Solver Architectures
+Being modular, a user can dynamically swap `PIBT` to `CBS` mid-simulation if required.
 
-Instead of keeping solving tightly coupled to our rendering layer, MAFIS logically separates pathfinding via robust abstractions.
-Solvers—such as conflict-based search (CBS) or PIBT—run cleanly. This separation allows us to safely and continuously query solver paths while handling real-time runtime events like faults and hardware simulation failures.
+## 3. The Fault Engine
 
-## 3. Fault Injection and State Mutations
+This is where MAFIS distinguishes itself from purely static theoretical benchmarks. Located in `src/fault`, the chaos engine listens over the simulation.
 
-In a traditional MAPF solver, everything is static. In MAFIS, the engine acts as an adversary.
-Using Bevy's robust event systems, custom fault injection logic can broadcast sudden failures to agents mid-simulation. This invalidates planned paths dynamically, forcing real-time recalculations and highlighting cascading system latencies.
+* **`breakdown.rs`**: Determines if a specific `Entity` suffers a hardware death based on injected math hooks.
+* **`heat.rs`**: Calculates thermal buildup per cell. Standing still in a cluster builds heat, eventually triggering Overheat faults.
+
+## 4. UI & Rendering
+
+The presentation layer. Kept strictly agnostic from the `core`.
+* **`ui/`**: Egui menus and statistical interfaces bridged natively into Bevy.
+* **`render/`**: 3D geometric interpretation of mathematical grids. Converts a `LogicalAgent` at `IVec2(5, 5)` into a glowing 3D cube mesh with interpolated animations (`animator.rs`), enabling humans to passively view algorithmic breakdowns in 60fps instead of reading raw CSV logs.

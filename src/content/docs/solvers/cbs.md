@@ -1,48 +1,21 @@
 ---
-title: Conflict-Based Search (CBS)
-description: Technical overview of the CBS algorithm implementation in MAFIS.
+title: CBS (Conflict-Based Search)
+description: The optimal multi-agent centralized solver.
 ---
 
-**Conflict-Based Search (CBS)** is an optimal, two-level algorithm for Multi-Agent Path Finding (MAPF).
+**Conflict-Based Search (CBS)** is the gold standard for finding the absolute optimal, collision-free path for a set of agents.
 
-## High-Level Search
-At the high level, CBS uses a Constraint Tree (CT). Each node in the CT contains:
-- A set of path constraints.
-- A path for every agent that respects these constraints.
-- A cost (typically the sum of path costs).
+Implemented in `src/solver/cbs.rs`, MAFIS features a centralized CBS architect that solves paths globally.
 
-If the paths have no conflicts (e.g., two agents occupying the same vertex at the same time), the node represents a valid solution. If a conflict occurs, the algorithm splits the node into two child nodes, adding a new constraint to each to prevent the conflict.
+## The Two-Level Search
 
-Inside MAFIS, the Constraint Tree components currently look like this in Rust:
+CBS operates using a multi-layered approach:
 
-```rust
-#[derive(Debug, Clone)]
-enum Conflict {
-    Vertex {
-        agent_a: usize,
-        agent_b: usize,
-        pos: IVec2,
-        time: u64,
-    },
-    Edge {
-        agent_a: usize,
-        agent_b: usize,
-        pos_a: IVec2,
-        pos_b: IVec2,
-        time: u64,
-    },
-}
+1. **High-Level Search:** Builds a Constraint Tree (CT). Each node in the tree contains a set of constraints (e.g., "Agent 1 cannot be at `(x, y)` at tick `t`"). The solver explores this tree to resolve all conflicts.
+2. **Low-Level Search:** Uses a time-space A* implementation to find the shortest path for individual agents while strictly respecting the constraints mandated by the High-Level node.
 
-#[derive(Debug, Clone)]
-struct CtNode {
-    constraints: Constraints,
-    solution: Vec<Vec<Action>>,
-    cost: u64,
-}
-```
+## Scalability and Faults
 
-## Low-Level Search
-At the low level, CBS uses an algorithm like A* to find the optimal path for an individual agent given a specific set of constraints inherited from the high-level node.
+Because CBS guarantees optimality, it is computationally expensive. 
 
-## MAFIS Implementation Notes
-In MAFIS, our Rust CBS implementation is heavily optimized for cache locality using Bevy's ECS. We utilize binary heaps for the Open List and carefully manage memory allocations during the Constraint Tree expansion to avoid out-of-memory errors in WebAssembly limits.
+When a **Breakdown Fault** occurs in MAFIS, the global optimal plan becomes invalid. Re-running CBS for hundreds of agents mid-simulation can result in significant framerate stutter. Thus, MAFIS allows researchers to study the specific latency introduced when a purely optimal solver is forced to replan on the fly versus a suboptimal reactive solver like PIBT.
