@@ -1,6 +1,6 @@
 ---
 title: Mathematical Simulation Core
-description: How MAFIS leverages Bevy for systems execution tracking.
+description: The ECS patterns at the core of MAFIS — how Bevy systems, schedules, and resources are organized to drive the simulation loop.
 ---
 
 Instead of running a large endless while-loop common in pure academic solvers, MAFIS breaks pathfinding into discrete state machines within Bevy's Application model.

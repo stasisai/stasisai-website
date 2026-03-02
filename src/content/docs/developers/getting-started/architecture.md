@@ -1,6 +1,6 @@
 ---
 title: MAFIS Architecture
-description: Overview of the Multi-Agent Fault Injection Simulator stack.
+description: The Rust/Bevy/WASM stack, module boundaries, build pipeline, and the JS↔Rust bridge that connects the simulator to the web frontend.
 ---
 
 MAFIS natively relies on a modern, deeply optimized systems programming stack tailored to large-scale operations.

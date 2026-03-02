@@ -1,6 +1,6 @@
 ---
 title: LaCAM (Lazy Constraints Addition Search)
-description: A hybrid approach balancing optimality and scalability based on Lazy Constraints Addition Search for MAPF.
+description: How LaCAM (Lazy Constraints Addition for MAPF) balances solution quality and scalability, and what its lazy constraint model means for fault-tolerant experiments.
 ---
 
 **LaCAM (Lazy Constraints Addition Search for MAPF)** is natively supported in `src/solver/lacam.rs` as a middle-ground algorithmic approach.

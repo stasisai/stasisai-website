@@ -1,6 +1,6 @@
 ---
 title: Quick Start
-description: Running the MAFIS simulator locally.
+description: Prerequisites, build commands, and how to run the MAFIS Rust/WASM simulator locally in under five minutes.
 ---
 
 Follow these steps to build and run the MAFIS simulator locally on your machine.

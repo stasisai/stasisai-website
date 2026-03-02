@@ -1,6 +1,6 @@
 ---
 title: A* (A-Star)
-description: The baseline algorithmic pathfinder.
+description: How A* finds optimal single-agent paths, its heuristics, and how it performs as a baseline under fault conditions in MAPF experiments.
 ---
 
 A* is a classic pathfinding algorithm and the foundational building block for most MAPF solvers.

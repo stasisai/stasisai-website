@@ -1,6 +1,6 @@
 ---
 title: Grid Interpretation
-description: Map boundaries and spatial querying in MAFIS.
+description: The grid resource types, coordinate systems, obstacle encoding, and spatial query APIs used by solvers and fault systems at the code level.
 ---
 
 Because MAPF algorithms require instantaneous geometry, MAFIS separates mathematical limits from graphical meshes.

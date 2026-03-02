@@ -1,6 +1,6 @@
 ---
 title: PIBT (Priority-Based Search)
-description: A real-time, purely reactive, scalable algorithm.
+description: How Priority-Based Inheritance with Backtracking handles large agent populations in real-time, and its resilience properties under fault injection.
 ---
 
 **PIBT (Priority-Based Search with Iterative Building)** is a highly scalable, decentralized algorithm built for high-density environments.

@@ -1,6 +1,6 @@
 ---
 title: Introduction to MAFIS
-description: What is MAFIS and why does it exist?
+description: What MAFIS is, why chaos engineering matters for multi-agent path finding, and how to orient yourself as a researcher.
 ---
 
 **MAFIS (Multi-Agent Fault Injection Simulator)** is a state-of-the-art simulator designed to run Multi-Agent Path Finding (MAPF) algorithms with built-in, real-time **Fault Injection**.

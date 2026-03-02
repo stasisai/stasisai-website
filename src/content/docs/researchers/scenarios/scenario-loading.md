@@ -1,6 +1,6 @@
 ---
 title: Sim Configuration & Scenarios
-description: Generating deterministic scenarios and testing models.
+description: How to define, load, and parameterize simulation scenarios in MAFIS for controlled experimental conditions and reproducible research.
 ---
 
 Testing paths algorithms rigorously demands repeatability. If a warehouse behaves drastically differently from run A to run B, optimization benchmarks are rendered useless.

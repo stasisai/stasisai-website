@@ -1,6 +1,6 @@
 ---
 title: Chaos Engineering in MAPF
-description: Using the environment as an active adversary.
+description: The conceptual model behind MAFIS fault injection — treating the environment as an adversary and measuring how solver strategies degrade under stress.
 ---
 
 Testing Multi-Agent Path Finding (MAPF) algorithms usually assumes a static, perfect environment. However, real-world deployments—such as automated warehouses with AGVs (Automated Guided Vehicles)—feature hardware fatigue, sensor lag, and battery issues.

@@ -1,6 +1,6 @@
 ---
 title: Heat Mechanics
-description: Modeling congestion, thermal runaway, and queueing penalties.
+description: How heat-based faults model congestion, thermal runaway, and queueing penalties — and what they expose about solver throughput under sustained load.
 ---
 
 A unique characteristic of MAFIS is its abstract representation of environmental penalty through "Heat."

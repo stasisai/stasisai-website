@@ -1,6 +1,6 @@
 ---
 title: Agent Components
-description: How agents are structured logically within Bevy ECS.
+description: The Bevy component types that make up a MAFIS agent — position, state, fault flags, solver metadata — and how they compose at runtime.
 ---
 
 Instead of Object-Oriented generic structures, MAFIS deeply relies on Bevy Engine's **ECS (Entity Component System)** to ensure variables are strictly isolated, leading to massive cache locality gains.

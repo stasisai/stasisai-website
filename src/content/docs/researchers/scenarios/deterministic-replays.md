@@ -1,6 +1,6 @@
 ---
 title: External Exports & Replays
-description: Recording state data continuously for exact forensic reproduction.
+description: How MAFIS exports simulation state continuously so any run can be replayed frame-by-frame for forensic analysis or result verification.
 ---
 
 Testing chaotic multi-agent paths requires absolute confidence in recreation. MAFIS allows users to dump total state data through our `src/export` module.

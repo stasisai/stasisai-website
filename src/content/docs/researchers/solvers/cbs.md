@@ -1,6 +1,6 @@
 ---
 title: CBS (Conflict-Based Search)
-description: The optimal multi-agent centralized solver.
+description: How Conflict-Based Search resolves agent collisions optimally and how its constraint tree behaves under injected faults.
 ---
 
 **Conflict-Based Search (CBS)** is the gold standard for finding the absolute optimal, collision-free path for a set of agents.

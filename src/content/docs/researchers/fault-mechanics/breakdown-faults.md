@@ -1,6 +1,6 @@
 ---
 title: Breakdown Faults
-description: Injecting sudden and absolute hardware deaths.
+description: How sudden, permanent agent failures are modeled in MAFIS and what they reveal about solver recovery and network resilience.
 ---
 
 In a real operational environment, an agent may physically break down and lose its ability to move. In **MAFIS**, this is represented as a **Breakdown Fault**.
