@@ -524,10 +524,45 @@ function Scene() {
     );
 }
 
+function WebGLFallback() {
+    const lines = [];
+    const squares = [];
+    // Horizontal lines
+    for (let y = 0; y <= 14; y++) {
+        const opacity = 0.15 - Math.abs(y - 7) * 0.008;
+        lines.push(<line key={`h${y}`} x1="0" y1={y * 20} x2="320" y2={y * 20}
+            stroke="currentColor" strokeWidth="0.5" opacity={Math.max(0.02, opacity)} />);
+    }
+    // Vertical lines
+    for (let x = 0; x <= 16; x++) {
+        const opacity = 0.15 - Math.abs(x - 8) * 0.008;
+        lines.push(<line key={`v${x}`} x1={x * 20} y1="0" x2={x * 20} y2="280"
+            stroke="currentColor" strokeWidth="0.5" opacity={Math.max(0.02, opacity)} />);
+    }
+    // Agent-shaped squares at a few intersections
+    const agentPositions = [[3,2],[7,3],[12,5],[5,8],[9,10],[14,6],[2,11],[10,4]];
+    agentPositions.forEach(([x,y], i) => {
+        squares.push(<rect key={`a${i}`} x={x*20-3} y={y*20-3} width="6" height="6"
+            fill="currentColor" opacity="0.08" />);
+    });
+    return (
+        <svg viewBox="0 0 320 280" style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+            color: 'currentColor', opacity: 0.15, pointerEvents: 'none',
+        }} preserveAspectRatio="xMidYMid slice">
+            {lines}{squares}
+        </svg>
+    );
+}
+
 export default function KineticGrid({ hideOverlay = false }) {
+    const [webglReady, setWebglReady] = useState(false);
+    const handleCreated = useCallback(() => setWebglReady(true), []);
+
     return (
         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
-            <Canvas camera={{ position: [0, 9, 11], fov: 38 }} style={{ background: 'transparent' }}>
+            {!webglReady && <WebGLFallback />}
+            <Canvas camera={{ position: [0, 9, 11], fov: 38 }} style={{ background: 'transparent' }} onCreated={handleCreated}>
                 <Scene />
             </Canvas>
             {!hideOverlay && (
