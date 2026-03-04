@@ -53,7 +53,7 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
             WASM bindings + JS bridge
           </li>
           <li class="pipeline-item pending">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="rgba(240,237,233,0.25)" stroke-width="1.5"/></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/></svg>
             Browser integration
           </li>
         </ul>
@@ -75,8 +75,8 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #080808;
-      color: #F0EDE9;
+      background: var(--bg);
+      color: var(--text);
       padding: 120px 24px 80px;
     }
     .sim-content {
@@ -98,15 +98,15 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: rgba(240,237,233,0.6);
+      color: var(--text-sec);
       padding: 8px 18px;
-      border: 1px solid rgba(240,237,233,0.1);
+      border: 1px solid var(--border);
     }
     .status-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #047857;
+      background: var(--green);
       animation: pulse-dot 2s infinite;
     }
     @keyframes pulse-dot {
@@ -120,11 +120,11 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       font-size: clamp(2rem, 4vw, 3.5rem);
       line-height: 1.1;
       letter-spacing: -1px;
-      color: #F0EDE9;
+      color: var(--text);
       margin: 0;
     }
     .sim-title em {
-      color: #F0EDE9;
+      color: var(--text);
       opacity: 0.35;
       font-style: italic;
     }
@@ -134,7 +134,7 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       font-family: var(--sans);
       font-weight: 300;
       font-size: 1rem;
-      color: rgba(240,237,233,0.55);
+      color: var(--text-sec);
       max-width: 520px;
       line-height: 1.7;
       margin: 0;
@@ -151,7 +151,8 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: rgba(240,237,233,0.35);
+      color: var(--text-sec);
+      opacity: 0.6;
       margin-bottom: 12px;
     }
 
@@ -159,7 +160,7 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
     .pipeline-card {
       width: 100%;
       max-width: 420px;
-      border: 1px solid rgba(240,237,233,0.1);
+      border: 1px solid var(--border);
       padding: 24px 28px;
       text-align: left;
     }
@@ -169,7 +170,8 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: rgba(240,237,233,0.4);
+      color: var(--text-sec);
+      opacity: 0.7;
       margin-bottom: 16px;
     }
     .pipeline-list {
@@ -188,16 +190,17 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       font-size: 12px;
       letter-spacing: 0.03em;
     }
-    .pipeline-item.done { color: rgba(240,237,233,0.5); }
-    .pipeline-item.active { color: #F0EDE9; }
-    .pipeline-item.pending { color: rgba(240,237,233,0.25); }
+    .pipeline-item.done { color: var(--text-sec); }
+    .pipeline-item.active { color: var(--text); }
+    .pipeline-item.pending { color: var(--text-sec); opacity: 0.35; }
 
     .spinner {
       width: 14px;
       height: 14px;
-      border: 1.5px solid rgba(240,237,233,0.15);
-      border-top-color: #047857;
+      border: 1.5px solid var(--border);
+      border-top-color: var(--green);
       border-radius: 50%;
+      flex-shrink: 0;
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin {
@@ -222,15 +225,15 @@ import ObservatoryTimeline from '../components/ObservatoryTimeline.jsx';
       text-decoration: none;
       transition: opacity 0.2s;
       border-radius: 0;
-      background: #F0EDE9;
-      color: #080808;
+      background: var(--dark);
+      color: var(--bg);
     }
-    .btn-sim:hover { opacity: 0.85; }
+    .btn-sim:hover { opacity: 0.8; }
     .btn-sim-ghost {
       background: transparent;
-      border: 1px solid rgba(240,237,233,0.2);
-      color: #F0EDE9;
+      border: 1px solid var(--border);
+      color: var(--text);
     }
-    .btn-sim-ghost:hover { border-color: rgba(240,237,233,0.4); opacity: 1; }
+    .btn-sim-ghost:hover { opacity: 0.7; }
   </style>
 </Layout>
