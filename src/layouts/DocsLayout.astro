@@ -388,7 +388,11 @@ const nextPage = currentIndex !== -1 && currentIndex < flatItems.length - 1 ? fl
     max-height: calc(100vh - 70px);
     overflow-y: auto;
   }
-  
+  @media (min-width: 1600px) {
+    .docs-container { padding-top: 84px; }
+    .sidebar-inner { top: 84px; max-height: calc(100vh - 84px); }
+  }
+
   .search-wrapper {
     margin-bottom: 24px;
     line-height: 1; /* Avoids strange vertical rhythm stacking on astro pagefind component */

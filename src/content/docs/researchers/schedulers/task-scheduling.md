@@ -13,7 +13,7 @@ PIBT is held constant as the solver. What varies across research configurations 
 2. **Fault intensity** — how frequently and severely faults occur
 3. **Grid topology** — the map structure (corridor width, bottlenecks, density)
 
-The same solver on the same map under the same fault intensity can produce radically different resilience profiles depending on how tasks are assigned. A scheduler that concentrates agents in narrow corridors produces high cascade depth and low adaptability. A scheduler that distributes load broadly produces lower baseline throughput but better fault resilience. This trade-off is the core research question MAFIS is designed to explore.
+> [!IMPORTANT] The same solver on the same map under the same fault intensity can produce radically different resilience profiles depending on how tasks are assigned. A scheduler that concentrates agents in narrow corridors produces high cascade depth and low adaptability. A scheduler that distributes load broadly produces lower baseline throughput but better fault resilience.
 
 ## The TaskScheduler Trait
 

@@ -16,11 +16,11 @@ pub trait TaskScheduler: Send + Sync + 'static {
 }
 ```
 
-Requirements for implementors:
-- Return value must be a walkable cell (`grid.is_walkable(pos) == true`).
-- Return value must not equal `agent_pos`.
-- Must be deterministic given the same `rng` state (no hidden global state).
-- Must complete within the frame budget (~10ms for 500 agents).
+> [!IMPORTANT] Requirements for implementors:
+> - Return value must be a walkable cell (`grid.is_walkable(pos) == true`).
+> - Return value must not equal `agent_pos`.
+> - Must be deterministic given the same `rng` state (no hidden global state).
+> - Must complete within the frame budget (~10ms for 500 agents).
 
 ### RandomScheduler
 

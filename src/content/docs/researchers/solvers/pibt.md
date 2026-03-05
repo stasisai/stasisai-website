@@ -23,7 +23,7 @@ PIBT plans **one step at a time**, never committing to a full path. This is exac
 - When an agent completes a task and receives a new goal, PIBT replans from the new configuration without any stateful path history to discard.
 - At 1000+ agents, PIBT runs in ~1–2ms per tick, well within the frame budget.
 
-One-shot solvers (CBS, LaCAM, PBS, LNS2) plan complete paths from start to goal and then stop. They cannot physically run in lifelong mode and produce non-actionable fault resilience results. They are archived on the `archive/one-shot-solvers` branch.
+> [!TIP] One-shot solvers (CBS, LaCAM, PBS, LNS2) plan complete paths from start to goal and then stop. They cannot physically run in lifelong mode and produce non-actionable fault resilience results. They are archived on the `archive/one-shot-solvers` branch.
 
 ## How PIBT Works
 
@@ -113,7 +113,7 @@ PIBT is incomplete — it can fail to find a solution even when one exists:
 - **No global coordination:** Each step is locally greedy with no mechanism to coordinate detours across timesteps.
 - **Priority aging mitigates but does not guarantee:** Stuck agents eventually get high priority, but may still be blocked by geometry.
 
-In practice, PIBT works reliably on open grids and moderate obstacle densities. Its incompleteness is acceptable for fault resilience research — what matters is the observable behavior of the fleet, not whether every theoretical solution is found.
+> [!NOTE] In practice, PIBT works reliably on open grids and moderate obstacle densities. Its incompleteness is acceptable for fault resilience research — what matters is the observable behavior of the fleet, not whether every theoretical solution is found.
 
 ## Complexity
 

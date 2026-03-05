@@ -20,6 +20,8 @@ The `heat_per_wait` penalty is typically higher than `heat_per_move`. This ensur
 
 ## Overheat Threshold
 
+> [!WARNING] When an agent's heat exceeds `overheat_threshold`, the agent dies permanently. Tune `heat_per_wait` and `congestion_heat_bonus` carefully — dense corridors can trigger chain overheat events.
+
 When an agent's accumulated heat exceeds `overheat_threshold`, a `FaultType::Overheat` is triggered:
 
 1. Agent state → Dead
@@ -45,7 +47,7 @@ The heat system creates a direct link between **scheduler strategy** and **fault
 - A scheduler that concentrates tasks in busy corridors will generate more Overheat faults per unit time than a scheduler that distributes load.
 - This means fault intensity is not just an external configuration knob — it emerges from the interaction between the scheduler and the map topology.
 
-This emergent behavior is by design. The observatory does not want to inject artificial faults at a fixed rate and measure recovery. It wants to observe how the system's own dynamics create fault pressure — and how different configurations handle that pressure differently.
+> [!TIP] This emergent behavior is by design. The observatory does not want to inject artificial faults at a fixed rate and measure recovery. It wants to observe how the system's own dynamics create fault pressure — and how different configurations handle that pressure differently. This directly feeds the [Adaptability metric](/docs/researchers/observatory/resilience-scorecard#3-adaptability) via heatmap entropy.
 
 ## Configuration
 

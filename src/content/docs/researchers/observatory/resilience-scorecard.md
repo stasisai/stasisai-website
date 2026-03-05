@@ -19,16 +19,18 @@ RESILIENCE SCORECARD
 
 *How much does throughput drop per fault?*
 
-```
-robustness = 1 - (avg_throughput_loss_per_fault / baseline_throughput)
-```
+$$R = 1 - \frac{\overline{\Delta T}}{T_b}$$
 
-- After each fault, throughput is sampled over the next W ticks (default W=20). The dip below baseline is the loss for that event.
-- Averaged across all fault events in the run.
-- **Range:** 0.0 (throughput collapses on every fault) to 1.0 (throughput unaffected).
+| Variable | Meaning |
+|---|---|
+| $R$ | Robustness score ∈ [0, 1] |
+| $\overline{\Delta T}$ | Mean throughput dip per fault, averaged over $W = 20$ ticks post-fault |
+| $T_b$ | Baseline throughput (goals/tick) captured during warmup |
+
+- **Range:** 0.0 (throughput collapses on every fault) → 1.0 (faults have no throughput effect).
 - **Data sources:** `FaultMetrics.throughput` + `ResilienceBaseline.baseline_throughput`
 
-**Example:** Baseline throughput is 2.4 goals/tick. Each fault causes an average dip of 0.31 goals/tick. Robustness = 1 - (0.31 / 2.4) = 0.87.
+> [!TIP] **Example:** $T_b = 2.4$ goals/tick. Mean dip per fault = $0.31$ goals/tick. $R = 1 - (0.31 / 2.4) = 0.87$.
 
 ---
 
@@ -36,17 +38,21 @@ robustness = 1 - (avg_throughput_loss_per_fault / baseline_throughput)
 
 *How fast does throughput return after a disruption?*
 
-```
-recoverability = avg ticks to recover from <80% to >90% of baseline throughput
-```
+$$t_{\text{rec}} = \frac{1}{|F|} \sum_{f \in F} \bigl( t_f^{\uparrow} - t_f^{\downarrow} \bigr)$$
 
-- Per fault event: a disruption starts when throughput drops below 80% of baseline and ends when it returns above 90%.
-- Averaged across all disruption events.
+| Variable | Meaning |
+|---|---|
+| $F$ | Set of all fault events in the run |
+| $t_f^{\downarrow}$ | First tick where throughput drops below $0.8 \cdot T_b$ after fault $f$ |
+| $t_f^{\uparrow}$ | First tick where throughput recovers above $0.9 \cdot T_b$ after fault $f$ |
+| $t_{\text{rec}}$ | Mean recovery duration in ticks (lower = better) |
+
 - **Unit:** ticks (lower = better).
-- **Edge cases:** If throughput never drops below 80%, the event is recorded as "absorbed" (0 ticks). If throughput never returns above 90%, the event is "not recovered."
 - **Data sources:** `FaultMetrics.throughput` time-series + `ResilienceBaseline`
 
-**Example:** Over three faults, recovery took 8, 12, and 16 ticks respectively. Recoverability = 12 ticks.
+> [!NOTE] **Edge cases:** If throughput never drops below 80%, the fault is recorded as "absorbed" ($t_f^\downarrow - t_f^\uparrow = 0$). If throughput never returns above 90%, the event is marked "not recovered" and excluded from the mean.
+
+> [!TIP] **Example:** Three faults recovered in 8, 12, and 16 ticks. $t_{\text{rec}} = (8 + 12 + 16) / 3 = 12$ ticks.
 
 ---
 
@@ -54,18 +60,21 @@ recoverability = avg ticks to recover from <80% to >90% of baseline throughput
 
 *Does the system redistribute traffic after a fault?*
 
-```
-adaptability = normalized_heatmap_entropy_change after fault events
-```
+$$A = \frac{H(t_f + w) - H(t_f)}{H_{\max}}$$
 
-- Shannon entropy of the heatmap density is computed at `fault_tick` and again at `fault_tick + recovery_window`.
-- If a blocked corridor causes traffic to redistibute → entropy increases → system adapted.
-- If agents jam at the blockage → entropy stays concentrated → system did not adapt.
-- **Range:** 0.0 (no redistribution) to 1.0 (full redistribution across the grid).
-- **Normalized** by the maximum possible entropy for the grid size.
-- **Data source:** `HeatmapState.density` — requires heatmap to be active during the fault phase.
+| Variable | Meaning |
+|---|---|
+| $H(t)$ | Shannon entropy of heatmap cell density at tick $t$ |
+| $t_f$ | Tick at which fault $f$ occurred |
+| $w$ | Recovery window (ticks) over which redistribution is observed |
+| $H_{\max}$ | Maximum possible entropy for this grid size ($\log_2$ of walkable cell count) |
+| $A$ | Adaptability score ∈ [0, 1] |
 
-**Note:** Adaptability is distinct from recoverability. A system can recover throughput quickly without redistributing routes (agents find a way around the specific blockage), or it can redistribute broadly while still showing throughput loss.
+- **Entropy increases** → agents redistributed to new routes → system adapted.
+- **Entropy stays flat** → agents jammed at the blockage → no adaptation.
+- **Data source:** `HeatmapState.density` — requires heatmap active during fault phase.
+
+> [!NOTE] Adaptability is distinct from recoverability. A system can recover throughput quickly without redistributing routes (agents detour around the specific blockage), or it can redistribute broadly while still showing throughput loss. Both dimensions are independent research signals.
 
 ---
 
@@ -73,22 +82,25 @@ adaptability = normalized_heatmap_entropy_change after fault events
 
 *Does the system degrade gracefully or collapse?*
 
-```
-slope = linear_regression(throughput over time during fault phase)
-```
+$$\beta = \frac{\sum_{t} \bigl(t - \bar{t}\bigr)\bigl(T(t) - \bar{T}\bigr)}{\sum_{t} \bigl(t - \bar{t}\bigr)^2}$$
 
-- Least-squares regression on the throughput time-series since fault injection began.
+| Variable | Meaning |
+|---|---|
+| $T(t)$ | Throughput (goals/tick) at tick $t$ during fault injection |
+| $\bar{t},\, \bar{T}$ | Means of $t$ and $T(t)$ over the fault phase window |
+| $\beta$ | Ordinary least-squares slope of throughput over time (goals/tick²) |
+
 - Recomputed every 50 ticks (not every tick).
 - **Labels:**
 
-| Slope | Label |
+| Slope $\beta$ | Label |
 |---|---|
-| > −0.001/tick | **Stable** |
-| −0.005 to −0.001/tick | **Degrading** |
-| < −0.005/tick | **Collapsing** |
-| > +0.001/tick | **Improving** |
+| $> -0.001$ | **Stable** |
+| $-0.005$ to $-0.001$ | **Degrading** |
+| $< -0.005$ | **Collapsing** |
+| $> +0.001$ | **Improving** |
 
-**Interpretation:** Near-zero slope means the system reached a new equilibrium under faults and maintains it. A steep negative slope means each additional fault degrades capacity further — a sign of structural fragility that will eventually produce collapse.
+> [!IMPORTANT] Near-zero $\beta$ means the system reached a new equilibrium under faults and maintains it. A strongly negative $\beta$ means each additional fault degrades capacity further — a sign of structural fragility that will eventually produce collapse.
 
 ---
 

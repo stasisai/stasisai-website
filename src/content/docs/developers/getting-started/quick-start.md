@@ -12,7 +12,7 @@ Follow these steps to build and run the MAFIS simulator locally.
 - **basic-http-server** — `cargo install basic-http-server`
 - The `wasm32-unknown-unknown` target — `rustup target add wasm32-unknown-unknown`
 
-On Linux, Bevy requires some native libraries (alsa, udev, wayland). On macOS and Windows these are typically available without extra steps.
+> [!WARNING] On Linux, Bevy requires some native libraries (alsa, udev, wayland). On macOS and Windows these are typically available without extra steps.
 
 ## Clone the Simulator Repository
 
@@ -44,7 +44,7 @@ wasm-bindgen --out-dir web --target web \
 basic-http-server web
 ```
 
-The simulator is now running at `http://localhost:4000`.
+> [!TIP] The simulator is now running at `http://localhost:4000`. The WASM build takes 2-3 minutes on the first compile. Subsequent builds with incremental compilation are much faster.
 
 ## Directory Structure After Build
 

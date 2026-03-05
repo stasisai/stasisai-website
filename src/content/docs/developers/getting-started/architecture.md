@@ -76,7 +76,7 @@ src/
 - `bridge.rs` — `get_simulation_state() -> String` (JSON), `send_command(cmd: &str)` — both `#[wasm_bindgen]`
 - `controls.rs` — Bevy `Startup` system that initializes all resources with default values
 
-The bridge is polled from JS at 100ms intervals. `get_simulation_state()` serializes the current simulation state to JSON. `send_command()` dispatches commands like `start`, `pause`, `set_scheduler random`, `seek_to_tick 312`.
+> [!NOTE] The bridge is polled from JS at 100ms intervals. `get_simulation_state()` serializes the current simulation state to JSON. `send_command()` dispatches commands like `start`, `pause`, `set_scheduler random`, `seek_to_tick 312`. The bridge is the **only** communication channel — there is no shared memory between JS and Rust.
 
 ## render — 3D Visualization
 

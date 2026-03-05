@@ -39,7 +39,7 @@ A stable identifier used by solvers and the cascade system:
 pub struct AgentIndex(pub usize);
 ```
 
-Bevy `Entity` IDs are not stable across despawn/respawn. `AgentIndex` provides a fixed 0-based index that solvers use to reference agents. `AgentRegistry` (a resource) maps between `AgentIndex` and `Entity`.
+> [!NOTE] Bevy `Entity` IDs are not stable across despawn/respawn. `AgentIndex` provides a fixed 0-based index that solvers use to reference agents. `AgentRegistry` (a resource) maps between `AgentIndex` and `Entity`.
 
 ## LifelongConfig
 
@@ -149,4 +149,4 @@ Query<(&LogicalAgent, &mut FaultState), Without<Dead>>
 Query<&AgentActionStats>
 ```
 
-Systems use `Without<Dead>` marker component to exclude dead agents from heat and action processing. Dead agents remain in the world as static obstacle representations until the simulation ends.
+> [!TIP] Systems use `Without<Dead>` marker component to exclude dead agents from heat and action processing. Dead agents remain in the world as static obstacle representations until the simulation ends.

@@ -22,6 +22,8 @@ Triggered when an agent's accumulated heat exceeds `overheat_threshold` (see [He
 
 A hardware death fault triggered by `breakdown_probability` on each tick, configurable via `FaultConfig`. Like Overheat, the agent dies and becomes a permanent obstacle. The distinction matters for analysis: Breakdown is stochastic and uncorrelated with congestion; Overheat is caused by congestion. Both produce identical cascade consequences.
 
+> [!WARNING] Overheat and Breakdown are **permanent** — the agent dies and its cell becomes an obstacle for the remainder of the simulation. Plan your fault intensity accordingly.
+
 ### TemporaryBlockage
 
 A cell-based fault, not agent-based. A cell becomes unwalkable for a configurable number of ticks (e.g., simulating a human walking through an aisle, a spill, or a dropped package). After N ticks, the cell automatically becomes walkable again. This is a **new fault type** (not present in earlier versions of MAFIS).
@@ -33,6 +35,8 @@ Agents whose paths cross the blocked cell must replan around it. When the blocka
 An agent-level degradation fault. The affected agent executes `Action::Wait` for N consecutive ticks regardless of what PIBT would assign. After N ticks, the agent resumes normal operation. The agent is **alive and occupying a cell** during latency — it is not an obstacle, but it is unresponsive to the planner.
 
 Real-world analogy: a robot's sensor system lags, a communication packet is dropped, or a software hang causes the robot to freeze briefly before recovering.
+
+> [!NOTE] Latency faults are the mildest fault type — the agent is alive, occupies its cell, and recovers automatically. Use them to study congestion propagation without permanent fleet attrition.
 
 ## FaultSource
 
@@ -47,7 +51,7 @@ pub enum FaultSource {
 
 Manual faults are injected while the simulation is paused (click a robot → "Kill" / "Block for N ticks" / "Slow for N ticks"). They are tagged `FaultSource::Manual` so they can be distinguished in analysis and export, but their metrics are computed through the same cascade pipeline as automatic faults — a manual kill produces the same cascade depth, spread, and recovery dynamics as an automatic breakdown.
 
-This ensures that manual injection experiments produce scientifically valid comparisons to automatic fault runs.
+> [!IMPORTANT] This ensures that manual injection experiments produce scientifically valid comparisons to automatic fault runs. Manual and automatic faults go through the identical cascade pipeline.
 
 ## Fault Intensity Configuration
 

@@ -17,7 +17,8 @@ During warmup, faults are suppressed. The simulation runs lifelong PIBT with age
 
 The default warmup window is **200 ticks**, configurable via the warmup duration slider in the configuration panel.
 
-The header shows progress: `WARMUP (84/200)`.
+> [!NOTE] During warmup, no faults fire and no fault metrics are computed. The header shows progress: `WARMUP (84/200)`.
+
 
 ## Phase 2: Fault Injection
 
@@ -25,7 +26,7 @@ Once warmup completes, faults activate automatically. All configured fault sourc
 
 The header transitions to: `FAULTS ACTIVE (tick 312)`.
 
-All resilience metrics — robustness, recoverability, adaptability, degradation slope — are computed as **deltas from the warmup baseline**. A throughput reading of 1.8 goals/tick only means something relative to a baseline of 2.4 goals/tick.
+> [!IMPORTANT] All resilience metrics — robustness, recoverability, adaptability, degradation slope — are computed as **deltas from the warmup baseline**. A throughput reading of 1.8 goals/tick only means something relative to a baseline of 2.4 goals/tick.
 
 ## SimulationPhase Resource
 

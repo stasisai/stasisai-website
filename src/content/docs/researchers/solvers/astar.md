@@ -7,9 +7,8 @@ description: Spacetime A* is solver infrastructure in MAFIS — a constrained si
 
 ## Role in the Architecture
 
-PIBT, the current solver, does not use Spacetime A*. PIBT plans greedily one step at a time and resolves conflicts via priority inheritance.
-
-Spacetime A* is available as an extension point for future solvers. The planned **RHCR** (Rolling-Horizon Collision Resolution) solver will use PIBT one-step as a subroutine with pre-decided constrained positions — and RHCR or CBS-like solvers that plan over time windows would use Spacetime A* for their inner single-agent planning loop.
+> [!NOTE] PIBT, the current solver, does not use Spacetime A*. PIBT plans greedily one step at a time and resolves conflicts via priority inheritance. Spacetime A* is available as an extension point for future solvers.
+ The planned **RHCR** (Rolling-Horizon Collision Resolution) solver will use PIBT one-step as a subroutine with pre-decided constrained positions — and RHCR or CBS-like solvers that plan over time windows would use Spacetime A* for their inner single-agent planning loop.
 
 ## API
 

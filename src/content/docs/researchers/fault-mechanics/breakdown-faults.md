@@ -15,7 +15,9 @@ The cascade pipeline starts with an **Agent Dependency Graph**. When a fault cre
 4. Add those agents to the dependency queue (indirect dependents).
 5. Repeat until no new conflicts are found.
 
-The ADG captures the full transitive closure of the disruption. **Cascade depth** is the maximum depth of this graph for any single fault event. **Cascade spread** is the total number of nodes (agents affected).
+> [!IMPORTANT] The ADG captures the full transitive closure of the disruption. **Cascade depth** is the maximum depth of this graph for any single fault event. **Cascade spread** is the total number of nodes (agents affected).
+
+
 
 ## BFS Cascade
 
@@ -84,6 +86,6 @@ In lifelong mode, cascade depth and spread are driven primarily by **scheduler s
 - A scheduler that assigns tasks concentrating agents in narrow corridors produces high cascade depth (blocked agents form long chains) and high spread (many agents share the same chokepoint).
 - A scheduler that distributes agents broadly produces lower cascade depth and spread, at the cost of potentially lower baseline throughput.
 
-This trade-off — baseline efficiency vs fault resilience — is the core research question MAFIS is designed to quantify. Two configurations can have identical baseline throughput but completely different cascade profiles, which only becomes visible under fault injection.
+> [!TIP] This trade-off — baseline efficiency vs fault resilience — is the core research question MAFIS is designed to quantify. Two configurations can have identical baseline throughput but completely different cascade profiles, which only becomes visible under fault injection.
 
 See [Fault Types](/docs/researchers/fault-mechanics/chaos-engineering) for the full fault taxonomy, and [Fault Metrics](/docs/researchers/metrics/fault-metrics) for the full set of metrics computed per event.

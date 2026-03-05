@@ -23,7 +23,7 @@ pub struct SeededRng {
 - `RandomScheduler` task assignment
 - `breakdown_probability` rolls
 
-With the same seed and configuration, two runs produce identical fault events at identical ticks with identical cascade consequences. This is required for the tick history rewind to be a reliable research tool — the snapshot you rewind to is exactly what happened, not a re-simulation.
+> [!TIP] With the same seed and configuration, two runs produce identical fault events at identical ticks with identical cascade consequences. This is required for the tick history rewind to be a reliable research tool — the snapshot you rewind to is exactly what happened, not a re-simulation.
 
 ## LifelongConfig
 
@@ -82,4 +82,4 @@ set_task_limit 500
 set_lifelong true
 ```
 
-These commands are effective before the simulation starts. Changes to scheduler or task limit after a run has begun are not supported — configure before starting.
+> [!WARNING] These commands are effective before the simulation starts. Changes to scheduler or task limit after a run has begun are not supported — configure before starting.

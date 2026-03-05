@@ -43,7 +43,7 @@ struct TickHistory {
 }
 ```
 
-Warmup ticks are **not** recorded — the warmup phase is baseline-only with no fault events to rewind to. Recording begins when the simulation transitions to `SimulationPhase::FaultInjection`.
+> [!NOTE] Warmup ticks are **not** recorded — the warmup phase is baseline-only with no fault events to rewind to. Recording begins when the simulation transitions to `SimulationPhase::FaultInjection`.
 
 ## Memory Budget
 
@@ -68,7 +68,7 @@ Start ──▶ Running ──── Pause ──▶ Paused ──── Seek �
 - **Paused:** simulation frozen, camera still interactive, manual fault injection available
 - **Replay:** reading from snapshot buffer, all simulation systems inactive, 3D scene reconstructed from snapshot
 
-Resume from Replay returns to Running and continues from where the simulation was paused (not from the replayed tick). Rewind is read-only — there is no branching from a past tick.
+> [!IMPORTANT] Resume from Replay returns to Running and continues from where the simulation was paused (not from the replayed tick). Rewind is read-only — there is no branching from a past tick.
 
 ## Chart Click-to-Seek
 

@@ -54,7 +54,7 @@ When a fault kills an agent, the fault system calls `grid.set_obstacle(agent_pos
 
 For `TemporaryBlockage` faults, the blockage system calls `set_obstacle` at fault time and schedules a future `remove_obstacle` after N ticks.
 
-This pattern — mutating the shared `GridMap` resource as the single source of geometric truth — ensures that all systems (solver, cascade, heat, scheduler) see the same world state without any synchronization overhead.
+> [!IMPORTANT] This pattern — mutating the shared `GridMap` resource as the single source of geometric truth — ensures that all systems (solver, cascade, heat, scheduler) see the same world state without any synchronization overhead.
 
 ## Initialization
 

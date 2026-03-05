@@ -29,7 +29,7 @@ pub enum SimState {
 | `Finished` | `task_limit` reached, simulation complete |
 | `Idle` | Between runs, configuration panel visible |
 
-`Paused` and `Replay` are distinct states with different behaviors: `Paused` allows step-forward (runs one real tick) and manual fault injection. `Replay` is read-only — only the snapshot cursor moves, no new ticks are simulated.
+> [!IMPORTANT] `Paused` and `Replay` are distinct states with different behaviors: `Paused` allows step-forward (runs one real tick) and manual fault injection. `Replay` is read-only — only the snapshot cursor moves, no new ticks are simulated.
 
 ## SimulationPhase
 
@@ -125,7 +125,7 @@ All resources are initialized in `controls.rs` (Bevy `Startup` system) before `S
 
 ## Determinism Guarantee
 
-Every system that modifies world state reads from `SeededRng`. No system uses `rand::thread_rng()` or any other external randomness source. This ensures that two runs with identical configuration and seed produce identical state at every tick — a requirement for tick history rewind accuracy.
+> [!IMPORTANT] Every system that modifies world state reads from `SeededRng`. No system uses `rand::thread_rng()` or any other external randomness source. This ensures that two runs with identical configuration and seed produce identical state at every tick — a requirement for tick history rewind accuracy.
 
 ## Adding a New System
 

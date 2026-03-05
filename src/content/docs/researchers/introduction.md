@@ -47,11 +47,11 @@ See [Resilience Scorecard](/docs/researchers/observatory/resilience-scorecard).
 
 ## What MAFIS Is NOT
 
-**Not a solver benchmark.** MAFIS does not compare algorithms against each other. Algorithm baseline comparisons are [MAPF Tracker](https://tracker.pathfinding.ai/)'s domain.
+> [!WARNING] **Not a solver benchmark.** MAFIS does not compare algorithms against each other. Algorithm baseline comparisons are [MAPF Tracker](https://tracker.pathfinding.ai/)'s domain.
 
-**Not a static testbed.** There are no rigid instance sets. For standardized 2D grid environments and scenarios, see [MovingAI MAPF Benchmarks](https://movingai.com/benchmarks/mapf.html).
+> [!WARNING] **Not a static testbed.** There are no rigid instance sets. For standardized 2D grid environments and scenarios, see [MovingAI MAPF Benchmarks](https://movingai.com/benchmarks/mapf.html).
 
-**Not a one-shot simulator.** MAFIS does not measure time-to-completion for a fixed set of start/goal pairs. It measures degradation under continuous operation.
+> [!WARNING] **Not a one-shot simulator.** MAFIS does not measure time-to-completion for a fixed set of start/goal pairs. It measures degradation under continuous operation.
 
 ## Getting Oriented
 

@@ -3,7 +3,7 @@ title: Adding Solvers
 description: How to implement a new lifelong-capable MAPF solver in MAFIS using the MAPFSolver trait, register it in the module, and verify it with tests.
 ---
 
-Only **lifelong-capable** solvers belong in MAFIS. One-shot solvers (CBS, LaCAM, PBS, LNS2) are archived on the `archive/one-shot-solvers` branch — they cannot run in lifelong mode and produce non-actionable results for fault resilience research. A solver that cannot keep running after agents reach their goals cannot be deployed in production, so it cannot be meaningfully evaluated here.
+> [!IMPORTANT] Only **lifelong-capable** solvers belong in MAFIS. One-shot solvers (CBS, LaCAM, PBS, LNS2) are archived on the `archive/one-shot-solvers` branch — they cannot run in lifelong mode and produce non-actionable results for fault resilience research.
 
 ## The `MAPFSolver` Trait
 
@@ -177,7 +177,7 @@ WASM build is not needed for pure solver changes.
 
 ## Lifelong Requirement
 
-Your solver will be called repeatedly during lifelong simulation whenever agents get new goals. The frame budget is approximately **10ms for 500 agents**. PIBT achieves ~1–2ms at this scale. If your solver is slower, it should use `recommended_max_agents` to warn users.
+> [!WARNING] Your solver will be called repeatedly during lifelong simulation whenever agents get new goals. The frame budget is approximately **10ms for 500 agents**. PIBT achieves ~1–2ms at this scale. If your solver is slower, it should use `recommended_max_agents` to warn users.
 
 Your solver must also handle **dynamic obstacle additions** correctly — faults add permanent obstacles mid-simulation. Since `solve()` always receives the current `GridMap`, and the grid already reflects all fault-created obstacles, no special handling is needed. The solver always plans on the current state.
 

@@ -935,7 +935,7 @@ import CascadeScene from '../components/CascadeScene.jsx';
       opacity: 0.65;
       text-align: center;
       max-width: 520px;
-      margin: 40px auto 0;
+      margin: 64px auto 0;
       line-height: 1.7;
     }
     .bevy-credit-link {
@@ -1205,7 +1205,7 @@ import CascadeScene from '../components/CascadeScene.jsx';
       .cascade-desc { font-size: 0.9rem; line-height: 1.6; }
 
       /* Bevy credit mobile */
-      .bevy-credit { font-size: 0.85rem; margin-top: 24px; }
+      .bevy-credit { font-size: 0.85rem; margin-top: 24px; color: #F0EDE9; opacity: 0.45; }
 
       /* Ecosystem mobile */
       .eco-card { padding: 24px; }
@@ -1228,7 +1228,7 @@ import CascadeScene from '../components/CascadeScene.jsx';
       .thesis-section .section-inner {
         height: 100%; padding: 24px 32px;
         display: flex; flex-direction: column;
-        justify-content: center; gap: 16px;
+        justify-content: center; gap: 36px;
       }
       .thesis-section .thesis-text { margin-bottom: 0; flex-shrink: 0; }
       .thesis-section .thesis-title { font-size: clamp(1.8rem, 3.2vw, 2.8rem); margin-bottom: 10px; }
@@ -1248,8 +1248,8 @@ import CascadeScene from '../components/CascadeScene.jsx';
       .observatory-section .observatory-text { margin-bottom: 0; flex-shrink: 0; }
       .observatory-section .observatory-title { font-size: clamp(1.5rem, 2.8vw, 2.4rem); margin-bottom: 8px; }
       .observatory-section .observatory-desc { font-size: 0.9rem; }
-      .observatory-section .observatory-timeline { flex-shrink: 0; min-height: 250px; margin: 0; width: 100%; }
-      .observatory-section .scorecard { flex-shrink: 0; padding: 24px 32px; max-width: 100%; width: 100%; }
+      .observatory-section .observatory-timeline { flex-shrink: 0; min-height: 250px; margin: 0; width: 100%; max-width: 100%; }
+      .observatory-section .scorecard { flex-shrink: 0; padding: 24px 32px; max-width: 1100px; width: 100%; margin-left: auto; margin-right: auto; }
       .observatory-section .scorecard-title { margin-bottom: 12px; font-size: 11px; }
       .observatory-section .scorecard-metric { padding: 12px 0; }
       .observatory-section .scorecard-metric-label { font-size: 13px; }
@@ -1283,6 +1283,18 @@ import CascadeScene from '../components/CascadeScene.jsx';
       .community-section .community-intro { font-size: 0.88rem; margin-bottom: 20px; }
       .community-section .eco-card { padding: 20px; }
       .community-section .eco-text { font-size: 0.82rem; line-height: 1.5; margin-bottom: 12px; }
+    }
+
+    /* ─── Wide screens (≥ 1600px) ──────────────────────────── */
+    @media (min-width: 1600px) {
+      .section-inner { max-width: 1400px; padding: 80px 64px; }
+      .thesis-section .section-inner { gap: 48px; }
+      .community-section { padding: 100px 0; }
+      .community-section .section-inner { padding: 0 64px; }
+      .community-title { font-size: 3rem; }
+      .eco-card { padding: 40px; }
+      .eco-text { font-size: 1rem; }
+      .ecosystem-grid { gap: 40px; }
     }
 
     /* ─── Tablet (601–900px): sections fill at least one screen ─ */
