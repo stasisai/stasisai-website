@@ -38,7 +38,7 @@ jobs:
 
       - name: Download WASM artifacts
         env:
-          GH_TOKEN: ${{ secrets.SIMULATOR_READ_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           TAG="${{ steps.tag.outputs.tag }}"
           if [ "$TAG" = "latest" ]; then
